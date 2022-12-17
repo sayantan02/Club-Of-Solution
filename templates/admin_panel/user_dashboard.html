@@ -1,0 +1,584 @@
+{% extends 'Base/base_admin.html' %}
+{% block dashboard %}active{% endblock dashboard %}
+{% block head %}
+<style>
+    .wrapper {
+        width: 100%;
+        padding: 30px 40px;
+    }
+
+    .wrapper .input-data {
+        height: 40px;
+        width: 100%;
+        position: relative;
+    }
+
+    .wrapper .input-data input {
+        height: 100%;
+        width: 100%;
+        border: none;
+        font-size: 17px;
+        border-bottom: 2px solid silver;
+    }
+
+    .input-data input:focus~label,
+    .input-data input:valid~label {
+        transform: translateY(-20px);
+        font-size: 15px;
+        color: #4158d0;
+    }
+
+    .wrapper .input-data label {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        color: grey;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    .input-data .underline {
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        bottom: 0;
+    }
+
+    .input-data .underline:before {
+        position: absolute;
+        content: "";
+        height: 100%;
+        width: 100%;
+        background: #4158d0;
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.3s ease;
+    }
+
+    .input-data input:focus~.underline:before,
+    .input-data input:valid~.underline:before {
+        transform: scaleX(1);
+    }
+
+    .input-data input:focus,
+    .input-data input:valid {
+        outline: none;
+        border-bottom: 0px;
+    }
+</style>
+
+
+{% endblock head %}
+{% block body %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    {% if userdetail.phone_number == None%}
+
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+            class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img"
+            aria-label="Warning:">
+            <path
+                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </svg>
+        <div class="ml-2">
+            Phone and City is not added. Functions will not work Properly.
+        </div>
+        <button id="addDetails_button" data-toggle="modal" href="#addDetails" type="button" class="ml-auto btn btn-outline-success">Add Now</button>
+    </div>
+    {% endif %}
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        {% if userdetail.payment_succeed %}
+        <p href="#" style="background-color: rgb(4, 139, 4);color: white;"
+            class="d-none d-sm-inline-block btn btn-sm shadow-sm"><i class="far fa-check-circle text-white-50"></i>
+            Activated</p>
+        {% else %}
+        <p href="#" style="background-color: rgb(243, 29, 29);color: white;"
+            class="d-none d-sm-inline-block btn btn-sm shadow-sm"><i class="fas fa-times-circle text-white-50"></i> Not
+            Activited</p>
+        {% endif %}
+    </div>
+
+
+    <!-- Content Row 1 -->
+    <div class="row">
+        <a href="/addshop" class="ml-4 mb-4 btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            <span class="text">Add Shop</span>
+        </a>
+        <a data-toggle="modal" href="#addCategory" class="mb-4 ml-4 btn btn-danger btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            <span class="text">Request Add Category</span>
+        </a>
+        <a href="/addproduct" class="ml-4 mb-4 btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            <span class="text">Add Products</span>
+        </a>
+    </div>
+
+
+    <!-- Add Category Modal -->
+
+    <form action="/contact/admin/" method="POST">{% csrf_token %}
+        <div class="modal fade" id="addCategory" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Request to Add Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="wrapper">
+                            <div class="mb-5 input-data">
+                                <input type="hidden" name="username" value="{{ request.user.username }}">
+                                <input type="hidden" name="name" value="{{ user.first_name }} {{ user.last_name }}">
+
+                                <input type="text" name="reason" value="Request to Add Category" required>
+
+                                <div class="underline"></div>
+                                <label>Reason</label>
+                            </div>
+
+                            <div class="input-data">
+                                <input type="hidden" name="contact" value="{{ user.email }}">
+
+                                <input id="ctnm" type="text" name="message" required>
+
+                                <div class="underline"></div>
+                                <label>Category Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Request</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <!-- Add Shop and Phone -->
+
+    {% if userdetails.phone_number == None %}
+    <form action="/Admin/AddDetails/" method="POST">{% csrf_token %}
+        <div class="modal fade" id="addDetails" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Add Phone And City</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="wrapper">
+                            <div class="mb-5 input-data">
+                                <input autocomplete="false" type="text" name="city" required>
+                                <div class="underline"></div>
+                                <label>Enter Your City</label>
+                            </div>
+
+                            <div class="input-data">
+                                <input autocomplete="false" id="ctnm" type="tel" name="phone_number" required>
+                                <div class="underline"></div>
+                                <label>Enter Your Phone Number</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Submit</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+
+
+    <!-- Content Row -->
+
+    <!-- Content Row 2 -->
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Shops</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ shop|length }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Total Products</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ products|length }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Next Payment
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                </div>
+                                <div class="col">
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 30%"
+                                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Cancelled Shops</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ cancelled_shops|length }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Row -->
+
+    <div class="row">
+
+        <!-- Area Chart -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="myAreaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pie Chart -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Important Activity</h6>
+                    <!-- <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <!-- <div class="chart-pie pt-4 pb-2">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Direct
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Social
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> Referral
+                        </span>
+                    </div> -->
+
+                    {% if userdetail.payment_succeed %}
+
+                    {% else %}
+                    <h5>Collector: {{ collector.user.first_name }} {{ collector.user.last_name|truncatechars:10 }}</h5>
+                    <img style="max-width: 100%;" src="/media/{{ collector.image }}">
+                    <div class="card-body">
+                        <p class="card-text">Transation ID: <b style="color: red;">{{ transaction.trans_id }}</b>
+                            Payable amount: Rs.<b style="color: green;">{{ transaction.balence }}</b>
+                            <br>
+                            {{ collector.user.first_name|truncatechars:10 }}'s ID: <b style="color: blue;">{{ collector.user_sharable_id }}</b>
+                            <br> Ordered On: {{ transaction.date }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+
+                            </div>
+                            <small class="text-muted">Ordered {{ transaction.date_time|timesince }} Ago</small>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Content Column -->
+        <!-- <div class="col-lg-6 mb-4"> -->
+
+        <!-- Project Card Example -->
+        <!-- <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                </div>
+                <div class="card-body">
+                    <h4 class="small font-weight-bold">Server Migration <span class="float-right">20%</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">Sales Tracking <span class="float-right">40%</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">Customer Database <span class="float-right">60%</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div> -->
+
+        <!-- Color System -->
+        <!-- <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-primary text-white shadow">
+                        <div class="card-body">
+                            Primary
+                            <div class="text-white-50 small">#4e73df</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-success text-white shadow">
+                        <div class="card-body">
+                            Success
+                            <div class="text-white-50 small">#1cc88a</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-info text-white shadow">
+                        <div class="card-body">
+                            Info
+                            <div class="text-white-50 small">#36b9cc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-warning text-white shadow">
+                        <div class="card-body">
+                            Warning
+                            <div class="text-white-50 small">#f6c23e</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-danger text-white shadow">
+                        <div class="card-body">
+                            Danger
+                            <div class="text-white-50 small">#e74a3b</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-secondary text-white shadow">
+                        <div class="card-body">
+                            Secondary
+                            <div class="text-white-50 small">#858796</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-light text-black shadow">
+                        <div class="card-body">
+                            Light
+                            <div class="text-black-50 small">#f8f9fc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-dark text-white shadow">
+                        <div class="card-body">
+                            Dark
+                            <div class="text-white-50 small">#5a5c69</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div> -->
+
+        <!-- Approach -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                </div>
+                <div class="card-body">
+                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+                        CSS bloat and poor page performance. Custom CSS classes are used to create
+                        custom components and custom utility classes.</p>
+                    <p class="mb-0">Before working with this theme, you should become familiar with the
+                        Bootstrap framework, especially the utility classes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                </div>
+                <div class="card-body">
+                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+                        CSS bloat and poor page performance. Custom CSS classes are used to create
+                        custom components and custom utility classes.</p>
+                    <p class="mb-0">Before working with this theme, you should become familiar with the
+                        Bootstrap framework, especially the utility classes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Illustrations -->
+        {% for i in Approved_shops %}
+        <div class="col-lg-6 mb-4">
+            {% if forloop.counter < 7 %} <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Module {{ forloop.counter }}</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;height: 15rem;"
+                            src="/media/{{ i.Display_Image }}" alt="...">
+                    </div>
+                    <h5 style="color: black;">{{ i.Name }}</h5>
+                    <span style="float: right;"><i class="mr-2 fas fa-clock"></i> {{ i.Created }}</span>
+
+                    <h6>User: {{ i.user.username }}</h6>
+
+                    <p style="float: right;"><i class="mr-2 fas fa-user"></i>{{ i.user.first_name }}</p>
+
+                    <p><i class="mr-2 fas fa-location-arrow"></i>{{ i.city }}</p>
+
+                    <p><i class="mr-2 fas fa-phone-alt"></i>{{ i.phone }}</p>
+
+                    <a target="_blank" rel="nofollow" href="/shopview/{{ i.id }}">View Your Module
+                        &rarr;</a>
+                    <hr>
+                </div>
+        </div>
+        {% endif %}
+    </div>
+    {% empty %}
+    No Approved moduled Found
+    {% endfor %}
+
+
+</div>
+
+</div>
+<!-- /.container-fluid -->
+<script>
+    jQuery(function(){
+        jQuery('#addDetails').click();
+    });
+</script>
+{% endblock body %}

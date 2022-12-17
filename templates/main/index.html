@@ -1,0 +1,1866 @@
+{% extends "Base/base.html" %}
+
+{% load static %}
+{% block navbar %}{% endblock navbar %}
+
+{% block title %}
+Find The Services Near You
+{% endblock title %}
+
+
+{% block style %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Mate+SC&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500&display=swap');
+
+  input[type=search]::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  input[type=text]::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  :root {
+    --root-color: #4e73df;
+    --main-red: #4e73df;
+    --main-dark-red: rgb(255, 0, 0);
+  }
+
+  * {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+
+  .title {
+    font-size: 25px;
+    font-family: 'Poppins', sans-serif;
+    margin: 30px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .row {
+    display: flex;
+    /*margin: 0px 10px;*/
+    align-items: center;
+  }
+
+  .row-item {
+    padding: 50px 30px;
+    height: 25vh;
+    background-color: rgb(243, 243, 243);
+    border-radius: 5px;
+    text-decoration: none;
+    width: 15vw;
+    margin: 30px 30px;
+    box-shadow: 0 0 5px 0 rgb(0, 0, 0, 0.500);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .row-item i {
+    color: rgb(90, 162, 255);
+    margin-right: 10px;
+    font-size: 30px;
+  }
+
+  .row-item p {
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  .row {
+    flex-wrap: wrap;
+  }
+
+  .banner {
+    height: 80vh;
+    width: 100vw;
+    background: linear-gradient(rgba(0, 0, 0, 0.650), rgba(0, 0, 0, 0.650)) , url('{% static "bg.jpg" %}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+    justify-content: center;
+  }
+
+  .banner h1 {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 45px;
+    margin: 0px;
+  }
+
+  .search {
+    background-color: white;
+    border-radius: 5px;
+  }
+  .banner .search{
+    margin-top: 20px;
+
+  }
+
+  .search form {
+    width: 50vw;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search form input {
+    width: 100%;
+    outline: none;
+    padding: 15px;
+    padding-left: 20px;
+    background-color: transparent;
+    padding-right: 20px;
+    border-radius: 5px 0px 0px 5px;
+    font-size: 13px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .search form input::placeholder {
+    color: black;
+    font-weight: 600;
+    font-size: 17px;
+  }
+
+  .search form button {
+    border: none;
+    border-radius: 0px 5px 0px 5px;
+    font-size: 20px;
+    background-color: #4e73df;
+    color: white;
+    transition: 0.6s;
+    cursor: pointer;
+  }
+
+  .search form button {
+    font-size: 20px;
+    padding: 15px 20px;
+  }
+
+  .login {
+    background-color: white;
+    color: black !important;
+    border-color: white !important;
+  }
+
+  .logo i {
+    color: white !important;
+  }
+
+  .item-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px;
+    margin-bottom: 1vh;
+  }
+
+  .item {
+    box-shadow: 0 6px 10px rgb(0 0 0 / 8%), 0 0 6px rgb(0 0 0 / 5%);
+    width: 20vw;
+    border-radius: 1rem;
+    margin: 20px 0px;
+    margin-left: 30px;
+  }
+
+  .item:last-of-type() {
+    margin: 0px;
+  }
+
+  .item .image {
+    overflow: hidden;
+    height: 25vh;
+    border-radius: 0.5rem;
+    width: 100%;
+  }
+
+  .item .image img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+    transition: 1s ease;
+  }
+
+  .item .text {
+    margin: 20px 15px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .item .text .item-title {
+    font-size: 20px;
+    transition: 0.6s ease;
+  }
+
+  .item .text .found {
+    margin: 5px 0px;
+    margin-bottom: 20px;
+    transition: 0.6s ease;
+  }
+
+  .bot-btn {
+    font-size: 1rem;
+    /* background: var(--main-red) !important; */
+    background: #f7810a;
+    /* border: 2px solid var(--main-red); */
+    color: #ffffff;
+    fill: #ffffff;
+    transition: 0.6s ease;
+    padding: 8px 20px;
+    border-radius: 100px;
+    color: white;
+    text-decoration: none;
+    box-shadow: -1px 6px 19px rgba(247, 129, 10, 0.25);
+  }
+  .bot-btn:hover{
+    /* color: var(--main-red);
+    background: transparent !important; */
+    background: none #ff962b;
+    color: #ffffff;
+    box-shadow: -1px 6px 13px rgba(255, 150, 43, 0.35)
+  }
+  .item:hover>.image img {
+    transform: scale(1.1);
+  }
+
+  .item:hover>.text p {
+    color: var(--main-red);
+  }
+
+  .suggest {
+    background-color: white;
+    border-radius: 5px;
+    display: none;
+    width: 50vw;
+    margin-top: 10px;
+    height: 23vh;
+    overflow-y: scroll;
+  }
+
+  .suggest ul li {
+    padding: 10px;
+  }
+
+  .near-me {
+    font-size: 15px;
+    background-color: rgb(211, 211, 211);
+    color: black;
+    padding: 5px;
+    width: 20%;
+    margin-right: 10px;
+  }
+
+  .suggest ul li:hover {
+    background-color: lightgrey;
+  }
+
+  @keyframes downto {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
+  @media (max-width: 800px) {
+    .search form {
+      width: 80vw;
+    }
+
+    .suggest {
+      width: 80vw;
+    }
+    .bot-btn{
+      font-size: 13px;
+      padding: 5px 8px;
+    }
+  }
+
+  @media(max-width: 800px) {
+    .item-container {
+      margin-left: 10px;
+    }
+
+    .nav-links li a:hover::after {
+      width: 0% !important;
+    }
+
+    .item {
+      width: 50vw;
+      margin-right: 0px;
+      margin: 40px 10px;
+    }
+
+    .item .image {
+      width: 100%;
+      /* height: 30vh; */
+    }
+
+    .slick-arrow {
+      display: none !important;
+    }
+  }
+
+  @media(max-width: 550px) {
+    .banner .title {
+      font-size: 25px;
+    }
+    .item .image img{
+      height: auto;
+    }
+  }
+
+  @media(max-width: 400px) {
+    .banner .title {
+      font-size: 20px;
+    }
+
+    .search-container form button {
+      padding: 10px;
+    }
+
+    .misssec div p {
+      font-size: 14px;
+      text-align: justify;
+    }
+
+    .search-container form input::placeholder {
+      font-size: 15px;
+    }
+
+    .search form button {
+      font-size: 13px;
+    }
+
+    .near-me {
+      font-size: 10px;
+      margin-right: 5px;
+      width: 30%;
+    }
+
+    .search form input {
+      margin-right: 5px;
+    }
+
+    .search form input::placeholder {
+      font-size: 13px;
+    }
+  }
+
+  @media(max-width: 350px) {
+    .navbar-brand {
+      font-size: 18px;
+    }
+  }
+
+  .near-me {
+    margin-bottom: 0px;
+    text-align: center;
+  }
+
+  .slick-track {
+    margin: 0px !important;
+  }
+
+  @media (max-width: 600px) {
+    .item .image {
+      /* height: 30vh; */
+    }
+
+    .item-title {
+      font-size: 14px !important;
+    }
+
+    .found {
+      font-size: 12px !important;
+    }
+
+    .title {
+      font-size: 19px;
+      margin-bottom: 0px;
+      margin-left: 20px;
+    }
+
+    .item-container {
+      margin-top: 0px;
+    }
+  }
+
+  .team {
+    background: #fff;
+    padding: 60px 0;
+  }
+
+  .team .member {
+    overflow: hidden;
+    text-align: center;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+    transition: 0.3s;
+  }
+
+  .team .member .member-img {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team .member .member-img:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 102%;
+    background: url("{% static 'item-shape.svg' %}") no-repeat center bottom;
+    background-size: contain;
+    z-index: 1;
+  }
+
+  .team .member .social {
+    position: absolute;
+    right: -100%;
+    top: 30px;
+    opacity: 0;
+    border-radius: 4px;
+    transition: 0.5s;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 2;
+  }
+
+  .team .member .social a {
+    transition: color 0.3s;
+    color: black;
+    margin: 15px 12px;
+    display: block;
+    line-height: 0;
+    text-align: center;
+  }
+
+  .team .member .social a:hover {
+    color: rgba(1, 41, 112, 0.8);
+  }
+
+  .team .member .social i {
+    font-size: 18px;
+  }
+
+  .team .member .member-info {
+    padding: 10px 15px 20px 15px;
+  }
+
+  .team .member .member-info h4 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: var(--main-red);
+  }
+
+  .team .member .member-info span {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    color: #aaaaaa;
+  }
+
+  .team .member .member-info p {
+    font-size: 14px;
+    padding-top: 15px;
+    line-height: 26px;
+    color: #5e5e5e;
+  }
+
+  .team .member:hover {
+    transform: scale(1.04);
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  }
+
+  .team .member:hover .social {
+    right: 8px;
+    opacity: 1;
+  }
+
+  .section-header p {
+    font-family: 'Montserrat', 'Poppins', sans-serif;
+    text-transform: capitalize;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 35px;
+    color: var(--main-red);
+  }
+
+  .misssec {
+    display: flex;
+    margin: 50px 30px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+  }
+
+  .misssec h1 {
+    color: var(--main-red);
+    margin-bottom: 40px;
+    font-family: 'Montserrat', 'Poppins', sans-serif;
+  }
+
+  .misssec div {
+    padding-right: 40px;
+  }
+
+  .misssec div:nth-child(2) {
+    padding-right: 0px;
+    padding-left: 40px;
+  }
+
+  .misssec p {
+    margin-top: 40px;
+  }
+
+  .vision {
+    border-right: 2px solid var(--main-red);
+  }
+
+  .misssec div img {
+    width: 100%;
+    height: 32vh;
+    object-fit: cover;
+  }
+
+  @media(max-width: 700px) {
+    .search-container form {
+      width: 90vw;
+    }
+
+    .misssec {
+      flex-direction: column;
+    }
+
+    .misssec div {
+      border: none;
+    }
+
+    .mission {
+      padding-left: 0px;
+      ;
+    }
+
+    .misssec .vision {
+      border-bottom: 2px solid var(--main-red);
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      padding-right: 0px;
+    }
+
+    .mission {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+
+    .misssec div:nth-child(2) {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+  }
+
+  @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+  .contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 50px;
+    margin-top: 70px;
+  }
+
+  .contact form {
+    border: 1px solid black;
+    padding: 30px;
+  }
+
+  .contact ::placeholder {
+    font-family: 'Montserrat', Arial, sans-serif;
+    text-transform: uppercase;
+    color: black;
+    font-size: 15px;
+  }
+
+  .share-part {
+    display: flex;
+  }
+
+  .share-part {
+    width: 100%;
+  }
+
+  .share-part .input-div {
+    width: 100%;
+  }
+
+  .share-part .input-div input {
+    width: 100%;
+  }
+
+  .subject {
+    width: 100%;
+  }
+
+  .contact textarea {
+    width: 100%;
+    resize: none;
+  }
+
+  .share-part .input-div input {
+    margin: 0px;
+  }
+
+  .contact input,
+  textarea {
+    margin: 15px 0px;
+    border: none;
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: black;
+    font-size: 15px;
+    text-transform: uppercase;
+    outline: none;
+    border-bottom: 1px solid #474544;
+    padding: 15px 0px;
+  }
+
+  .share-part .input-div .email {
+    width: 90%;
+    margin-left: 20px;
+  }
+
+  iframe {
+    border: 1px solid black;
+    margin-right: 20px;
+  }
+
+  .submit {
+    background-color: #474544;
+    font-family: 'Montserrat', Arial, sans-serif;
+    text-transform: uppercase;
+    padding: 15px 50px !important;
+    color: white !important;
+    transition: 0.4s;
+    border-radius: 5px;
+  }
+
+  .submit:hover {
+    background-color: #474544;
+    color: white;
+    cursor: pointer;
+  }
+
+  .contact-title {
+    color: var(--main-red);
+    font-size: 32px;
+    margin-top: 50px;
+    font-weight: 300;
+    letter-spacing: 7px;
+    text-align: center;
+    font-family: 'Montserrat', Arial, sans-serif;
+    text-transform: uppercase;
+  }
+
+  .underline {
+    border-bottom: solid 1px var(--main-red);
+    margin: 20px auto;
+    width: 80px;
+  }
+
+  @media(max-width: 800px) {
+    .contact {
+      flex-direction: column;
+      width: 90vw;
+    }
+
+    .contact form {
+      width: 85vw;
+      margin-right: 20px;
+      margin-top: 50px;
+    }
+
+    iframe {
+      width: 90vw;
+    }
+  }
+
+  .success {
+    color: darkgreen;
+    background-color: lightgreen;
+    padding: 10px 20px;
+    text-align: center;
+    margin: 20px 0px;
+    font-size: 15px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    text-transform: uppercase;
+    display: none;
+  }
+
+  .loc-icon {
+    background-color: rgb(211, 211, 211);
+    padding: 8px;
+    width: 2rem;
+    color: red;
+    margin-right: 5px;
+    border-radius: 20px;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-bottom: 1px solid var(--main-red);
+  }
+
+  /* Additional */
+
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+  :root {
+    --font1: 'Heebo', sans-serif;
+    --font2: 'Fira Sans Extra Condensed', sans-serif;
+    --font3: 'Roboto', sans-serif
+  }
+
+  body {
+    font-family: var(--font3);
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)
+  }
+
+  h2 {
+    font-weight: 900
+  }
+
+  .container-fluid {
+    max-width: 1200px
+  }
+
+  .card {
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+    transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+    border: 0;
+    border-radius: 1rem
+  }
+
+  .card-img,
+  .card-img-top {
+    border-top-left-radius: calc(1rem - 1px);
+    border-top-right-radius: calc(1rem - 1px)
+  }
+
+  .card h5 {
+    overflow: hidden;
+    height: 56px;
+    font-weight: 900;
+    font-size: 1rem
+  }
+
+  .card-img-top {
+    width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    padding: 30px
+  }
+
+  .card h2 {
+    font-size: 1rem
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06)
+  }
+
+  .label-top {
+    position: absolute;
+    background-color: #8bc34a;
+    color: #fff;
+    top: 8px;
+    right: 8px;
+    padding: 5px 10px 5px 10px;
+    font-size: .7rem;
+    font-weight: 600;
+    border-radius: 3px;
+    text-transform: uppercase
+  }
+
+  .top-right {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    font-size: 1rem;
+    font-weight: 900;
+    background: #ff5722;
+    line-height: 90px;
+    text-align: center;
+    color: white
+  }
+
+  .top-right span {
+    display: inline-block;
+    vertical-align: middle
+  }
+
+  @media (max-width: 768px) {
+    .card-img-top {
+      max-height: 250px
+    }
+  }
+
+  .over-bg {
+    background: rgba(53, 53, 53, 0.85);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(0.0px);
+    -webkit-backdrop-filter: blur(0.0px);
+    border-radius: 10px
+  }
+
+  .btn {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 5px 50px 5px 50px
+  }
+
+  .box .btn {
+    font-size: 1.5rem
+  }
+
+  @media (max-width: 1025px) {
+    .btn {
+      padding: 5px 40px 5px 40px
+    }
+  }
+
+  .btn-warning{
+    font-size: 15px !important;
+  }
+
+  @media (max-width: 250px) {
+    .btn {
+      padding: 5px 30px 5px 30px
+    }
+  }
+
+  .btn-warning {
+    background: none #f7810a;
+    color: #ffffff;
+    fill: #ffffff;
+    border: none;
+    font-size: 10px;
+    text-decoration: none;
+    outline: 0;
+    box-shadow: -1px 6px 19px rgba(247, 129, 10, 0.25);
+    border-radius: 100px
+  }
+
+  .btn-warning:hover {
+    background: none #ff962b;
+    color: #ffffff;
+    box-shadow: -1px 6px 13px rgba(255, 150, 43, 0.35)
+  }
+
+  .bg-success {
+    font-size: 1rem;
+    background-color: #f7810a !important
+  }
+
+  .bg-danger {
+    font-size: 1rem
+  }
+
+  .price-hp {
+    font-size: 1rem;
+    font-weight: 600;
+    color: darkgray
+  }
+
+  .amz-hp {
+    font-size: .7rem;
+    font-weight: 600;
+    color: darkgray
+  }
+
+  .fa-question-circle:before {
+    color: darkgray
+  }
+
+  .fa-plus:before {
+    color: darkgray
+  }
+
+  .box {
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 6px 10px rgb(0 0 0 / 8%), 0 0 6px rgb(0 0 0 / 5%);
+    transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12)
+  }
+
+  .box-img {
+    max-width: 300px
+  }
+
+  .thumb-sec {
+    max-width: 300px
+  }
+
+  @media (max-width: 576px) {
+    .box-img {
+      max-width: 200px
+    }
+
+    .thumb-sec {
+      max-width: 200px
+    }
+  }
+
+  .inner-gallery {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin: 1px;
+    display: inline-block;
+    overflow: hidden;
+    -o-object-fit: cover;
+    object-fit: cover
+  }
+
+  @media (max-width: 370px) {
+    .box .btn .bot-btn {
+      padding: 5px 40px 5px 40px;
+      font-size: 1rem
+    }
+  }
+
+  .disclaimer {
+    font-size: .9rem;
+    color: darkgray
+  }
+
+  .related h3 {
+    font-weight: 900
+  }
+
+  .autocomplete {
+	position: relative;
+	display: inline-block;
+}
+.autocomplete-items {
+	position: absolute;
+	z-index: 99;
+  margin-top: 5px;
+	top: 100%;
+	left: 0;
+	right: 0;
+}
+</style>
+{% endblock style %}
+
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'slick/slick.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'slick/slick-theme.css' %}" />
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+{% endblock head %}
+
+{% block body %}
+<div class="banner" id="banner">
+  <h1 class="title" data-aos="fade-down">Problem Ends Here</h1>
+  <div class="search" data-aos="fade-up">
+    <form action="/location_manager/getlatlon" method="get">
+      <input type="hidden" id="lat" name="user_latitude">
+      <input type="hidden" id="lon" name="user_longitude">
+      <input type="search" id="search" name="search" id="search" autocomplete="off" placeholder="Search what's in your mind">
+
+      <!-- <span id="shop-name" autocomplete='off'>
+          <span class='input-group mb-3'>
+          <input aria-describedby='button-addon2' aria-label='Country' class='form-control autocomplete' type="search" id="search" name="search" placeholder="Search what's in your mind">
+          </span>
+      </span> -->
+
+      <i style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#location" onclick="getlocation()" class="loc-icon fas fa-map-marker-alt"></i>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="location" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="show_location"></p>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+        <button id="getloc" disabled type="button" class="btn btn-success" data-bs-dismiss="modal">Sync Location</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./Modal -->
+
+
+<script>
+
+
+  var x = document.getElementById("location");
+  function getlocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition)
+    }
+    else {
+      alert("Sorry! your browser is not supporting")
+    }
+  }
+
+  function showPosition(position) {
+    document.getElementById("lat").value = position.coords.latitude;
+    document.getElementById("lon").value = position.coords.longitude;
+    var x = "Your current location is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
+    document.getElementById("show_location").innerHTML = x;
+    document.getElementById("getloc").removeAttribute("disabled");
+  }
+
+</script>
+
+{% for i in item_1 %}
+{% if empty %}
+
+{% else %}
+{% if forloop.counter == 1 %}
+<h1 class="title" data-aos="fade-right">Popular Shops In Coochbehar</h1>
+<div class="item-container" data-aos="fade-in" data-aos-delay="600">
+{% endif %}
+{% endif %}
+
+  <div class="item" onclick="window.location.href='/shopview/{{ i.shop.id }}';">
+    <div class="image">
+      <img src="/media/{{ i.shop.Display_Image }}" alt="" srcset="">
+    </div>
+    <div class="text">
+        <p class="item-title">{{ i.shop.Name }}</p>
+        <p class="found">{{ i.shop.city }}</p>
+        <a class="bot-btn" href="/shopview/{{ i.shop.id }}">Check Shop</a>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+{% for i in item_2 %}
+{% if empty %}
+
+{% else %}
+{% if forloop.counter == 1 %}
+<h1 class="title" data-aos="fade-right">Best For Tourist In Coochbehar</h1>
+<div class="item-container" data-aos="fade-in" data-aos-delay="600">
+{% endif %}
+{% endif %}
+
+  <div class="item" onclick="window.location.href='/shopview/{{ i.shop.id }}';">
+    <div class="image">
+      <!-- <img src="/media/{{j.Image}}" alt="" srcset=""> -->
+      <img src="/media/{{ i.shop.Display_Image }}" alt="" srcset="">
+    </div>
+    <div class="text">
+        <p class="item-title">{{ i.shop.Name }}</p>
+        <p class="found">{{ i.shop.city }}</p>
+        <a class="bot-btn" href="/shopview/{{ i.shop.id }}">Check Shop</a>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% for i in item_3 %}
+{% if empty %}
+
+{% else %}
+{% if forloop.counter == 1 %}
+<h1 class="title" data-aos="fade-right">Best Institutes In Coochbehar</h1>
+<div class="item-container" data-aos="fade-in" data-aos-delay="600">
+{% endif %}
+{% endif %}
+
+  <div class="item" onclick="window.location.href='/shopview/{{ i.shop.id }}';">
+    <div class="image">
+      <!-- <img src="/media/{{j.Image}}" alt="" srcset=""> -->
+      <img src="/media/{{ i.shop.Display_Image }}" alt="" srcset="">
+    </div>
+    <div class="text">
+        <p class="item-title">{{ i.shop.Name }}</p>
+        <p class="found">{{ i.shop.city }}</p>
+        <a class="bot-btn" href="/shopview/{{ i.shop.id }}">Check Shop</a>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+<div class="misssec">
+  <div data-aos="fade-up" class="vision">
+    <h1>Our Vision</h1>
+    <img src="{% static 'vision.jpg' %}">
+    <p>Our Vision is to provide the Exact Solutions that no-one provides.
+      we are visionate to create strong relationships between retailers and customers and we'll be the middle man, as well as we will provide many other types of services like, a job-seeker finds different types of jobs as well as a Hirer finds the right person to Hire for the post, so we will be the middle man and we'll connect the two seekers.<br>
+   <b>Basically Our Vision is to Connect Seekers Hardly from the Rural Areas</p>
+  </div>
+  <div style="padding-left: 20px;padding-right: 20px;" data-aos="fade-down" class="mission">
+    <h1>Our Mission</h1>
+    <img src="{% static 'mission.jpg' %}">
+    <p>This initiative to connects and stables each business relationships. <br></b> We nine persons concluded this initiative to provide the best solution for everything you needed for everytime, we'll take the responsibility for their business to be taken online with our portal <b>Club of Solution</b> our mission is to see the world totaly switched to the online platforms especially the rural areas,  they also deserve the best.</p>
+  </div>
+</div>
+
+<section id="team" class="team">
+
+  <div class="container" data-aos="fade-up">
+
+    <header class="section-header">
+      <p>Our Partners</p>
+    </header>
+
+    <div class="row mt-5 gy-4">
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+        <div class="member">
+          <div class="member-img">
+            <img style="width: 100%;" src="{% static './hotels.jpg' %}" class="img-fluid" alt="">
+            <div class="social">
+              <a href=""><i class="fab fa-twitter"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+              <a href=""><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4 class="mt-3">Raktim Talukdar</h4>
+            <span>Founder & CEO</span>
+            <p><b>Through Effort we can climb up the fort</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+        <div class="member">
+          <div class="member-img">
+            <img style="width: 100%;" src="{% static './hotels.jpg' %}" class="img-fluid" alt="">
+            <div class="social">
+              <a href=""><i class="fab fa-twitter"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+              <a href=""><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4 class="mt-3">Sayantan Biswas</h4>
+            <span>Development Officer</span>
+            <p>Quo esse repellendus quia id. Est eum et accusantium pariatur fugit nihil minima suscipit corporis.
+              Voluptate sed quas reiciendis animi neque sapiente.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+        <div class="member">
+          <div class="member-img">
+            <img style="width: 100%;" src="{% static './hotels.jpg' %}" class="img-fluid" alt="">
+            <div class="social">
+              <a href=""><i class="fab fa-twitter"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+              <a href=""><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4 class="mt-3">Om Saha</h4>
+            <span>Joint Development Officer</span>
+            <p>Vero omnis enim consequatur. Voluptas consectetur unde qui molestiae deserunt. Voluptates enim aut
+              architecto porro aspernatur molestiae modi.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row mt-5 gy-4">
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+        <div class="member">
+          <div class="member-img">
+            <img style="width: 100%;" src="{% static './hotels.jpg' %}" class="img-fluid" alt="">
+            <div class="social">
+              <a href=""><i class="fab fa-twitter"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+              <a href=""><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4 class="mt-3">Debajit Sarkar</h4>
+            <span>Business Development Officer</span>
+            <p>Velit aut quia fugit et et. Dolorum ea voluptate vel tempore tenetur ipsa quae aut. Ipsum exercitationem
+              iure minima enim corporis et voluptate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+        <div class="member">
+          <div class="member-img">
+            <img style="width: 100%;" src="{% static './hotels.jpg' %}" class="img-fluid" alt="">
+            <div class="social">
+              <a href=""><i class="fab fa-twitter"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+              <a href=""><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4 class="mt-3">Mridul Das</h4>
+            <span>Business Development Officer</span>
+            <p>Quo esse repellendus quia id. Est eum et accusantium pariatur fugit nihil minima suscipit corporis.
+              Voluptate sed quas reiciendis animi neque sapiente.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+        <div class="member">
+          <div class="member-img">
+            <img style="width: 100%;" src="{% static './hotels.jpg' %}" class="img-fluid" alt="">
+            <div class="social">
+              <a href=""><i class="fab fa-twitter"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+              <a href=""><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4 class="mt-3">Nityananda Mandal</h4>
+            <span>Support Manager</span>
+            <p>Vero omnis enim consequatur. Voluptas consectetur unde qui molestiae deserunt. Voluptates enim aut
+              architecto porro aspernatur molestiae modi.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row mt-5 gy-4">
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+        <div class="member">
+          <div class="member-img">
+            <img style="width: 100%;" src="{% static './hotels.jpg' %}" class="img-fluid" alt="">
+            <div class="social">
+              <a href=""><i class="fab fa-twitter"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+              <a href=""><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4 class="mt-3">Pranab Sarkar</h4>
+            <span>Finance Manager</span>
+            <p>Velit aut quia fugit et et. Dolorum ea voluptate vel tempore tenetur ipsa quae aut. Ipsum exercitationem
+              iure minima enim corporis et voluptate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+        <div class="member">
+          <div class="member-img">
+            <img style="width: 100%;" src="{% static './hotels.jpg' %}" class="img-fluid" alt="">
+            <div class="social">
+              <a href=""><i class="fab fa-twitter"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+              <a href=""><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4 class="mt-3">Koushiki Kangsa Banik</h4>
+            <span>Product Manager</span>
+            <p>Quo esse repellendus quia id. Est eum et accusantium pariatur fugit nihil minima suscipit corporis.
+              Voluptate sed quas reiciendis animi neque sapiente.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+        <div class="member">
+          <div class="member-img">
+            <img style="width: 100%;" src="{% static './hotels.jpg' %}" class="img-fluid" alt="">
+            <div class="social">
+              <a href=""><i class="fab fa-twitter"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+              <a href=""><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+          <div class="member-info">
+            <h4 class="mt-3">Surajit Chakdar</h4>
+            <span>Collection Manager</span>
+            <p>Vero omnis enim consequatur. Voluptas consectetur unde qui molestiae deserunt. Voluptates enim aut
+              architecto porro aspernatur molestiae modi.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<h1 class="contact-title">&bull; Contact Us &bull;</h1>
+<div class="underline"></div>
+
+
+<div class="container">
+  <form id="contactus" action="/contact/con/" method="post">{% csrf_token %}
+    <div class="row">
+      <div class="col">
+        <input type="text" class="form-control" name="name" placeholder="Name" aria-label="Name" required>
+      </div>
+      <div class="col">
+        <input type="email" class="form-control" name="contact" placeholder="Email" aria-label="Email" required>
+      </div>
+    </div>
+    <div class="form-floating mt-3 mb-3">
+      <input type="text" class="form-control" id="floatingInput" name="reason" placeholder="Subject">
+      <label for="floatingInput">Subject</label>
+    </div>
+    <div class="form-floating">
+      <textarea class="form-control" placeholder="Start Typing..." name="message" id="floatingTextarea2" style="height: 150px"></textarea>
+      <label for="floatingTextarea2">Start Typing...</label>
+    </div>
+    <button class="btn btn-primary mb-3">Send</button>
+  </form>
+</div>
+
+<!-- <div class="contact">
+
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d531.5514880012794!2d89.44573476789932!3d26.331747113981773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e2ff56daa49515%3A0x592e8ddcfd231272!2sDR%20ZONE!5e0!3m2!1sen!2sin!4v1625632939332!5m2!1sen!2sin"
+    width="650" height="600" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  <div class="form">
+
+
+    <form method="post">
+      {% csrf_token %}
+      <p class="success">Message Sent Successfully !</p>
+
+      <div class="share-part">
+
+        <div class="input-div">
+          <input type="text" name="name" placeholder="Your Full Name" required>
+        </div>
+
+        <div class="input-div">
+          <input class="email" type="email" name="email" placeholder="You Email Address" required>
+        </div>
+
+      </div>
+
+      <div class="input-div">
+        <input type="text" class="subject" name="subject" required placeholder="Why You Want To Contact Us ?">
+      </div>
+
+      <div class="input-div">
+        <textarea rows="10" cols="60" name="message" placeholder="Message" required></textarea>
+      </div>
+
+      <input type="submit" class="submit" name="contact" value="Send Message">
+
+    </form>
+  </div>
+
+</div> -->
+
+
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'slick/slick.min.js' %}"></script>
+
+
+<script>
+  $(document).ready(function(){
+$("#contactus-submit").click(function(){
+var r= $('<i class="fa fa-spinner fa-spin"></i>');
+$("#contactus-submit").html(r);
+$("#contactus-submit").append(" Sending...");
+$("#contactus-submit").attr("disabled", true);
+
+
+setTimeout(function(){
+$("#contactus-submit").attr("disabled", false);
+$("#contactus-submit").html('Send');
+
+}, 3000);
+
+
+});
+});
+</script>
+
+
+<script type="text/javascript">
+  $('.item-container').slick({
+    speed: 500,
+    infinite: false,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          infinite: false,
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          infinite: false,
+          slidesToShow: 2.15,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  });
+  window.onscroll = function () { scrollFunction() };
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+      $(".scroller").addClass("scroll");
+    } else {
+      $(".scroller").removeClass("scroll");
+    }
+  }
+</script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 2000,
+  });
+</script>
+
+<script>
+
+  "use strict";
+  
+  let autocomplete = (inp, arr) => {
+    /*the autocomplete function takes two arguments,
+    the text field element and an array of possible autocompleted values:*/
+    let currentFocus;
+    /*execute a function when someone writes in the text field:*/
+    inp.addEventListener("input", function(e) {
+      let a, //OUTER html: variable for listed content with html-content
+        b, // INNER html: filled with array-Data and html
+        i, //Counter
+        val = this.value;
+  
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+  
+      if (!val) {
+        return false;
+      }
+  
+      currentFocus = -1;
+  
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.style.display = "flex"
+      a.setAttribute("class", "autocomplete-items list-group text-left");
+      
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+  
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          b.setAttribute("class","list-group-item list-group-item-action");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+          b.addEventListener("click", function(e) {
+            /*insert the value for the autocomplete text field:*/
+            inp.value = this.getElementsByTagName("input")[0].value;
+            /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+            closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+    });
+    
+    /*execute a function presses a key on the keyboard:*/
+    inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+          increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) {
+        //up
+        /*If the arrow UP key is pressed,
+          decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+    });
+    
+    let addActive = (x) => {
+      /*a function to classify an item as "active":*/
+      if (!x) return false;
+      /*start by removing the "active" class on all items:*/
+      removeActive(x);
+      if (currentFocus >= x.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = x.length - 1;
+      /*add class "autocomplete-active":*/
+      x[currentFocus].classList.add("active");
+    }
+    
+    let removeActive = (x) => {
+      /*a function to remove the "active" class from all autocomplete items:*/
+      for (let i = 0; i < x.length; i++) {
+        x[i].classList.remove("active");
+      }
+    }
+    
+    let closeAllLists = (elmnt) => {
+      /*close all autocomplete lists in the document,
+      except the one passed as an argument:*/
+      var x = document.getElementsByClassName("autocomplete-items");
+      for (var i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != inp) {
+          x[i].parentNode.removeChild(x[i]);
+        }
+      }
+    }
+    
+    /*execute a function when someone clicks in the document:*/
+    document.addEventListener("click", function(e) {
+      closeAllLists(e.target);
+    });
+    
+  };
+  
+  let query = {{ queries|safe }};
+  
+  
+  
+  /*An array containing all the country names in the world:*/
+  let countries = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Anguilla",
+    "Antigua & Barbuda",
+    "Argentina",
+    "Armenia",
+    "Aruba",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bermuda",
+    "Bhutan",
+    "Bolivia",
+    "Bosnia & Herzegovina",
+    "Botswana",
+    "Brazil",
+    "British Virgin Islands",
+    "Brunei",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "Cape Verde",
+    "Cayman Islands",
+    "Central Arfrican Republic",
+    "Chad",
+    "Chile",
+    "China",
+    "Colombia",
+    "Congo",
+    "Cook Islands",
+    "Costa Rica",
+    "Cote D Ivoire",
+    "Croatia",
+    "Cuba",
+    "Curacao",
+    "Cyprus",
+    "Czech Republic",
+    "Denmark",
+    "Djibouti",
+    "Dominica",
+    "Dominican Republic",
+    "Ecuador",
+    "Egypt",
+    "El Salvador",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Estonia",
+    "Ethiopia",
+    "Falkland Islands",
+    "Faroe Islands",
+    "Fiji",
+    "Finland",
+    "France",
+    "French Polynesia",
+    "French West Indies",
+    "Gabon",
+    "Gambia",
+    "Georgia",
+    "Germany",
+    "Ghana",
+    "Gibraltar",
+    "Greece",
+    "Greenland",
+    "Grenada",
+    "Guam",
+    "Guatemala",
+    "Guernsey",
+    "Guinea",
+    "Guinea Bissau",
+    "Guyana",
+    "Haiti",
+    "Honduras",
+    "Hong Kong",
+    "Hungary",
+    "Iceland",
+    "India",
+    "Indonesia",
+    "Iran",
+    "Iraq",
+    "Ireland",
+    "Isle of Man",
+    "Israel",
+    "Italy",
+    "Jamaica",
+    "Japan",
+    "Jersey",
+    "Jordan",
+    "Kazakhstan",
+    "Kenya",
+    "Kiribati",
+    "Kosovo",
+    "Kuwait",
+    "Kyrgyzstan",
+    "Laos",
+    "Latvia",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Macau",
+    "Macedonia",
+    "Madagascar",
+    "Malawi",
+    "Malaysia",
+    "Maldives",
+    "Mali",
+    "Malta",
+    "Marshall Islands",
+    "Mauritania",
+    "Mauritius",
+    "Mexico",
+    "Micronesia",
+    "Moldova",
+    "Monaco",
+    "Mongolia",
+    "Montenegro",
+    "Montserrat",
+    "Morocco",
+    "Mozambique",
+    "Myanmar",
+    "Namibia",
+    "Nauro",
+    "Nepal",
+    "Netherlands",
+    "Netherlands Antilles",
+    "New Caledonia",
+    "New Zealand",
+    "Nicaragua",
+    "Niger",
+    "Nigeria",
+    "North Korea",
+    "Norway",
+    "Oman",
+    "Pakistan",
+    "Palau",
+    "Palestine",
+    "Panama",
+    "Papua New Guinea",
+    "Paraguay",
+    "Peru",
+    "Philippines",
+    "Poland",
+    "Portugal",
+    "Puerto Rico",
+    "Qatar",
+    "Reunion",
+    "Romania",
+    "Russia",
+    "Rwanda",
+    "Saint Pierre & Miquelon",
+    "Samoa",
+    "San Marino",
+    "Sao Tome and Principe",
+    "Saudi Arabia",
+    "Senegal",
+    "Serbia",
+    "Seychelles",
+    "Sierra Leone",
+    "Singapore",
+    "Slovakia",
+    "Slovenia",
+    "Solomon Islands",
+    "Somalia",
+    "South Africa",
+    "South Korea",
+    "South Sudan",
+    "Spain",
+    "Sri Lanka",
+    "St Kitts & Nevis",
+    "St Lucia",
+    "St Vincent",
+    "Sudan",
+    "Suriname",
+    "Swaziland",
+    "Sweden",
+    "Switzerland",
+    "Syria",
+    "Taiwan",
+    "Tajikistan",
+    "Tanzania",
+    "Thailand",
+    "Timor L'Este",
+    "Togo",
+    "Tonga",
+    "Trinidad & Tobago",
+    "Tunisia",
+    "Turkey",
+    "Turkmenistan",
+    "Turks & Caicos",
+    "Tuvalu",
+    "Uganda",
+    "Ukraine",
+    "United Arab Emirates",
+    "United Kingdom",
+    "United States of America",
+    "Uruguay",
+    "Uzbekistan",
+    "Vanuatu",
+    "Vatican City",
+    "Venezuela",
+    "Vietnam",
+    "Virgin Islands (US)",
+    "Yemen",
+    "Zambia",
+    "Zimbabwe"
+  ];
+  
+  /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+  autocomplete(document.getElementById("search"), query);
+  /**
+   * CREATES OUTPUT LIKE THIS:
+   *
+   * <div id="myInputautocomplete-list" class="autocomplete-items">
+   *    <div>
+   *       <strong>A</strong>fghanistan<input value="Afghanistan" type="hidden">
+   *    </div>
+   *    <div><strong>A</strong>lbania<input value="Albania" type="hidden"></div>
+   *    <div><strong>A</strong>zerbaijan<input value="Azerbaijan" type="hidden"></div>
+   *    ...
+   *    ...
+   *    ...
+   * </div>
+   */
+  
+  
+  </script>
+
+{% endblock body %}

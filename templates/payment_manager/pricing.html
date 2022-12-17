@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COS - Pricing</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
+        section.pricing {
+            background: #007bff;
+            background: linear-gradient(to right, #de6262, #ffb88c);
+        }
+
+        .pricing .card {
+            border: none;
+            border-radius: 1rem;
+            transition: all 0.2s;
+            box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing hr {
+            margin: 1.5rem 0;
+        }
+
+        .pricing .card-title {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            letter-spacing: .1rem;
+            font-weight: bold;
+        }
+
+        .pricing .card-price {
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        .pricing .card-price .period {
+            font-size: 0.8rem;
+        }
+
+        .pricing ul li {
+            margin-bottom: 1rem;
+        }
+
+        .pricing .text-muted {
+            opacity: 0.7;
+        }
+
+        .pricing .btn {
+            font-size: 80%;
+            border-radius: 5rem;
+            letter-spacing: .1rem;
+            font-weight: bold;
+            padding: 1rem;
+            opacity: 0.7;
+            transition: all 0.2s;
+        }
+
+        /* Hover Effects on Card */
+
+        @media (min-width: 992px) {
+            .pricing .card:hover {
+                margin-top: -.25rem;
+                margin-bottom: .25rem;
+                box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+            }
+
+            .pricing .card:hover .btn {
+                opacity: 1;
+            }
+        }
+
+
+        .popup {
+            position: fixed;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            font-family: 'Poppins', sans-serif;
+            display: none;
+            z-index: 9999;
+            border: 4px sold grey;
+        }
+
+        .contentBox {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            display: flex;
+            box-shadow: -12px -12px 14px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .contentBox .imgBox {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contentBox .imgBox::before {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background-color: #e7ffe0;
+            border-radius: 50%;
+        }
+
+        .contentBox .imgBox img {
+            position: relative;
+            max-width: 250px;
+            z-index: 1;
+        }
+
+        .contentBox .content {
+            margin-top: 40px;
+            position: relative;
+            width: 300px;
+            height: 400px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contentBox .content h3 {
+            color: #333;
+            line-height: 1em;
+            font-weight: 300;
+            font-size: 2em;
+        }
+
+        .contentBox .content h2 {
+            font-size: 4em;
+            color: #ff4d54;
+            line-height: 1em;
+
+        }
+
+        .contentBox .content h2 span {
+            color: #333;
+            font-size: 0.75em;
+            text-transform: uppercase;
+        }
+
+        .contentBox .content p {
+            font-weight: 300;
+            margin-right: 20px;
+        }
+
+        .contentBox .content a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff4d54;
+            color: #fff;
+            margin-top: 15px;
+            text-decoration: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .contentBox .content a:hover {
+            color: white;
+        }
+
+        /* .close{
+            position: absolute;
+            color: rgb(87, 87, 87);
+            top: 20px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 9999;
+        } */
+
+        /* Make it Responsive */
+        @media (max-width: 767px) {
+            .popup {
+                margin-top: 30px;
+                z-index: 9999;
+            }
+
+            .contentBox {
+                width: 300px;
+                height: auto;
+                flex-direction: column;
+            }
+
+            .contentBox .imgBox::before {
+                background-color: white;
+            }
+
+            .contentBox .imgBox {
+                height: 200px;
+                transform: translateY(-50px);
+            }
+
+            .contentBox .content {
+                height: auto;
+                text-align: center;
+                padding: 20px;
+                padding-top: 0;
+            }
+
+            /* .close{
+                padding: 5px;
+                color: black;
+                border-radius: 50%;
+                top: -50px;
+                right: -10px;
+            } */
+        }
+
+        /*  countdown timer */
+        /* .wrap {
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            height: 310px;
+        } */
+
+        .row {
+            background: linear-gradient(to right, #de6262, #ffb88c);
+        }
+
+        #countdown {
+            display: none;
+        }
+
+        #countdown li {
+            display: inline-block;
+            font-size: 1.5em;
+            list-style-type: none;
+            padding: 1em;
+            text-transform: uppercase;
+        }
+
+        #countdown li span {
+            display: block;
+            font-size: 3.5rem;
+        }
+
+        @media all and (max-width: 768px) {
+
+            #countdown li {
+                font-size: 1.125rem;
+                padding: .75rem;
+            }
+
+            #countdown li span {
+                font-size: 2.375rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+
+    {% if offer_status %}
+    <div class="popup">
+        <div class="contentBox">
+            <!-- <div class="close"><i style="color: black;" class="fas fa-times"></i></div> -->
+            <div class="imgBox">
+                <img src="../../static/gift.png" alt="" srcset="">
+            </div>
+            <div class="content">
+                <div>
+                    <h3>Special Offer</h3>
+                    <h2>75<sup>%</sup><span>Off</span></h2>
+                    <p>Now, you will get ₹800 Plan only in ₹200 for a Limited Time, <b>Grab it now.</b></p>
+                </div>
+                <div style="display: flex;justify-content: space-around;">
+                    <a href="#card" class="close">Don't Need</a>
+                    <form id="purchase" action="" method="post">{% csrf_token %}
+                        <input type="hidden" name="amount" value="200">
+                        <a onclick="Purchased()" style="background-color: #4e73df;">Get in ₹200</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script>
+
+        function Purchased(){
+            document.getElementById("purchase").submit()
+        }
+
+        (function () {
+            const second = 1000,
+                minute = second * 60,
+                hour = minute * 60,
+                day = hour * 24;
+
+            let birthday = "{{ ending }}",
+                countDown = new Date(birthday).getTime(),
+                x = setInterval(function () {
+
+                    let now = new Date().getTime(),
+                        distance = countDown - now;
+
+                    document.getElementById("days").innerText = Math.floor(distance / (day)),
+                        document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
+                        document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
+                        document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
+
+                    //do something later when date is reached
+                    if (distance < 0) {
+                        let headline = document.getElementById("headline"),
+                            countdown = document.getElementById("countdown"),
+                            content = document.getElementById("content");
+
+                        countdown.style.display = "none";
+
+                        clearInterval(x);
+                    }
+                    //seconds
+                }, 0)
+            console.log(countDown)
+        }());
+    </script>
+    <div class="row">
+        <div style="text-align: center;" class="col-lg-12">
+            <div id="countdown">
+                <ul>
+                    <li><span id="days"></span>days</li>
+                    <li><span id="hours"></span>Hours</li>
+                    <li><span id="minutes"></span>Minutes</li>
+                    <li><span id="seconds"></span>Seconds</li>
+                    <li><span>LEFT</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <section class="pricing py-5">
+                <div class="container">
+
+                    <!-- Free Tier -->
+                    <!-- <div class="col-lg-4">
+                    <div class="card mb-5 mb-lg-0">
+                        <div class="card-body">
+                            <h5 class="card-title text-muted text-uppercase text-center">Biginner</h5>
+                            <h6 class="card-price text-center">₹200<span class="period">/month</span></h6>
+                            <hr>
+                            <ul class="fa-ul">
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>Single User</li>
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>5GB Storage</li>
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects
+                                </li>
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>
+                                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Unlimited
+                                    Private Projects</li>
+                                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Dedicated
+                                    Phone Support</li>
+                                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Free
+                                    Subdomain
+                                </li>
+                                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly
+                                    Status
+                                    Reports</li>
+                            </ul>
+                            <form method="POST" >{% csrf_token %}
+                            <div class="d-grid">
+                                    <input type="hidden" name="amount" value="200">
+                                    <button href="#" class="btn btn-primary text-uppercase">Select Plan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> -->
+                    <!-- Plus Tier -->
+                    <!-- <div class="col-lg-4">
+                    <div class="card mb-5 mb-lg-0">
+                        <div class="card-body">
+                            <h5 class="card-title text-muted text-uppercase text-center">Plus</h5>
+                            <h6 class="card-price text-center">₹400<span class="period">/month</span></h6>
+                            <hr>
+                            <ul class="fa-ul">
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>5 Users</strong></li>
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>50GB Storage</li>
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Public Projects
+                                </li>
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Private Projects
+                                </li>
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>Dedicated Phone Support</li>
+                                <li><span class="fa-li"><i class="fas fa-check"></i></span>Free Subdomain</li>
+                                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Monthly
+                                    Status
+                                    Reports</li>
+                            </ul>
+                            <form method="POST" >{% csrf_token %}
+                                <div class="d-grid">
+                                        <input type="hidden" name="amount" value="400">
+                                        <button href="#" class="btn btn-primary text-uppercase">Select Plan</button>
+                                    </div>
+                                </form>
+                        </div>
+                    </div>
+                </div> -->
+                    <!-- Pro Tier -->
+                    <div class="col-lg-4">
+                        <div id="card" class="card">
+                            <div class="card-body">
+                                {% if offer_status %}
+                                {% else %}
+                                <div class="text-center alert alert-warning" role="alert">
+                                    Your Offer has been Ended
+                                  </div>
+                                  {% endif %}
+                                <h5 class="card-title text-muted text-uppercase text-center">Pro</h5>
+                                <h6 class="card-price text-center">₹800<span class="period">/month</span></h6>
+                                <hr>
+                                <ul class="fa-ul">
+                                    <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>Dynamic
+                                            WebPage</strong>
+                                    </li>
+                                    <li><span class="fa-li"><i class="fas fa-check"></i></span>Furnished Dashboard
+                                    </li>
+                                    <li><span class="fa-li"><i class="fas fa-check"></i></span>Easy To Use</li>
+                                    <li><span class="fa-li"><i class="fas fa-check"></i></span>Light Weighted</li>
+                                    <li><span class="fa-li"><i class="fas fa-check"></i></span>Facebook Ads</li>
+                                    <li><span class="fa-li"><i class="fas fa-check"></i></span>Google Ads</li>
+                                    <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>Youtube
+                                            Ads</strong>
+                                    </li>
+                                    <li><span class="fa-li"><i class="fas fa-check"></i></span>Instagram Ads</li>
+                                </ul>
+                                <form method="POST">{% csrf_token %}
+                                    <div class="d-grid">
+                                        <input type="hidden" name="amount" value="800">
+                                        <button href="#" class="btn btn-primary text-uppercase">Select Plan</button>
+                                    </div>
+                                </form>
+                                {% if offer_status %}
+                                <div class="d-grid">
+                                    <button onclick="showOffer()" id="offerpopup"
+                                        class="mt-3 btn btn-danger text-uppercase">Get in ₹200</button>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    {% if offer_status %}
+    <script>
+        const popup = document.querySelector(".popup");
+
+        document.getElementById("offerpopup").style.display = "none"
+        window.onload = function () {
+            setTimeout(function () {
+                popup.style.display = "block"
+            }, 5000);
+        }
+        document.querySelector(".close").addEventListener("click", () => {
+            popup.style.display = "none"
+            document.getElementById("countdown").style.display = "block"
+            document.getElementById("offerpopup").style.display = "block"
+        });
+
+        function showOffer() {
+            popup.style.display = "block"
+            document.getElementById("countdown").style.display = "none"
+        }
+    </script>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

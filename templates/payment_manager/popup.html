@@ -1,0 +1,187 @@
+
+<!-- Never Used -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+        
+        body {
+            background-color: #6cb1ff;
+        }
+
+        .popup {
+            position: fixed;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            font-family: 'Poppins', sans-serif;
+            display: none;
+        }
+
+        .contentBox {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            display: flex;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contentBox .imgBox {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contentBox .imgBox::before {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background-color: #e7ffe0;
+            border-radius: 50%;
+        }
+
+        .contentBox .imgBox img {
+            position: relative;
+            max-width: 250px;
+            z-index: 1;
+        }
+
+        .contentBox .content {
+            margin-top: 40px;
+            position: relative;
+            width: 300px;
+            height: 400px;
+            justify-content: center;
+            align-items: center;
+        }
+        .contentBox .content h3{
+            color: #333;
+            line-height: 1em;
+            font-weight: 300;
+            font-size: 2em;
+        }
+        .contentBox .content h2{
+            font-size: 4em;
+            color: #ff4d54;
+            line-height: 1em;
+
+        }
+
+        .contentBox .content h2 span{
+            color: #333;
+            font-size: 0.75em;
+            text-transform: uppercase;
+        }
+
+        .contentBox .content p{
+            font-weight: 300;
+            margin-right: 20px;
+        }
+        .contentBox .content a{
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff4d54;
+            color: #fff;
+            margin-top: 15px;
+            text-decoration: none;
+            border-radius: 10px;
+        }
+        .close{
+            position: absolute;
+            color: rgb(87, 87, 87);
+            top: 20px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Make it Responsive */
+        @media (max-width: 767px){
+            .popup{
+                margin-top: 30px;
+            }
+            .contentBox{
+                width: 300px;
+                height: auto;
+                flex-direction: column;
+            }
+
+            .contentBox .imgBox::before{
+                background-color: white;
+            }
+            .contentBox .imgBox{
+                height: 200px;
+                transform: translateY(-50px);
+            }
+            .contentBox .content{
+                height: auto;
+                text-align: center;
+                padding: 20px;
+                padding-top: 0;
+            }
+            .close{
+                padding: 5px;
+                color: black;
+                border-radius: 50%;
+                top: -50px;
+                right: -10px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="popup">
+        <div class="contentBox">
+            <div class="close"><i class="fas fa-times"></i></div>
+            <div class="imgBox">
+                <img src="../../static/gift.png" alt="" srcset="">
+            </div>
+            <div class="content">
+                <div>
+                    <h3>Special Offer</h3>
+                    <h2>80<sup>%</sup><span>Off</span></h2>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis id natus commodi </p>
+                    <a href="">Get The Deal</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const popup = document.querySelector(".popup");
+
+        window.onload = function(){
+            setTimeout(function(){
+                popup.style.display = "block"
+            }, 2000);
+        }
+        document.querySelector(".close").addEventListener("click", () =>{
+            popup.style.display = "none"
+        })
+    </script>
+
+</body>
+
+</html>

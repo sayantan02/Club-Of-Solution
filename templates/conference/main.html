@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Conference</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        * {
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(54, 54, 54);
+        }
+
+        .video-con {
+            top: 0px;
+            left: 0px;
+            position: absolute;
+            width: 23vw;
+        }
+
+        .video-con video {
+            width: 100%;
+        }
+
+        .shopkepper-video {
+            height: 100vh;
+        }
+
+        .shopkepper-video video {
+            height: 100%;
+            width: 100vw;
+            object-fit: cover;
+        }
+
+        .video-container {
+            position: relative;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.600);
+            z-index: 1;
+        }
+
+        .controls i {
+            color: black;
+            background-color: white;
+            border-radius: 100px;
+            padding: 13px;
+            margin: 0px 10px;
+        }
+
+        .video-con p {
+            position: absolute;
+            left: 0px;
+            bottom: 3px;
+            background-color: rgba(0, 0, 0, 0.600);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 999;
+            scrollbar-width: 0px;
+            top: 0;
+            right: 0;
+            background-color: rgb(54, 54, 54);
+            overflow-x: hidden;
+            transition: 0.5s;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.600);
+        }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+
+        .chat-top {
+            display: flex;
+            align-items: center;
+            margin: 0px 32px;
+            justify-content: space-between;
+        }
+
+        .chat-title {
+            color: white;
+            FONT-SIZE: 18px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .closebtn {
+            color: white;
+        }
+
+        .chat-item {
+            margin: 20px 32px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .user-sent {
+            color: white;
+            margin-top: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+        }
+
+        .message-sent {
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .send-message {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+        }
+
+        .send-message input {
+            width: 100%;
+            padding: 10px;
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .send-message button {
+            background-color: white;
+            color: black;
+            padding: 13.5px 10px;
+            border: 1px solid white;
+        }
+
+        .send-message {
+            border: 2px solid white;
+
+        }
+
+        input::placeholder {
+            color: white;
+        }
+
+        .chat-content {
+            height: 80vh;
+            overflow-y: scroll;
+            scrollbar-width: 0px;
+        }
+
+        @media(max-width: 700px) {
+            .video-con {
+                width: 50vw;
+            }
+
+            .sidebar {
+                width: 300px;
+            }
+
+            .controls i {
+                font-size: 13px;
+            }
+        }
+        #end-call{
+            transform: rotate(227deg);
+        }
+        body{
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% block content %}
+    {% endblock %}
+    {% block footer_block %}
+    {% endblock %}
+</body>
+
+</html>

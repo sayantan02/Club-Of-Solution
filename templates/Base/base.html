@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>Club Of Solution - {% block title %} {% endblock title %}</title>
+
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/static/logo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block head %}
+
+    {% endblock head %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Mate+SC&display=swap');
+
+        input[type=search]::-ms-clear {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        input[type=text]::-ms-reveal {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        :root {
+            --main-red: #4e73df;
+            --main-dark-red: rgb(255, 0, 0);
+        }
+
+        .error {
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            padding: 10px 20px;
+            margin: 0px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            background-color: var(--main-red);
+        }
+        body{
+            overflow-x: hidden;
+        }
+        * {
+            margin: 0px;
+            font-family: 'Poppins', sans-serif;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+        .options-bar{
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.445);
+            background-color: rgba(221, 221, 221, 0.445);
+            justify-content: center;
+            height: 3rem;
+        }
+        .slick-arrow{
+            display: none;
+        }
+        .options-item{
+            color: black;
+            font-family: 'Poppins', sans-serif;
+            margin: 0px 10px;
+            padding: 15px 25px;
+            font-size: 18px;
+            position: relative;
+        }
+        .d-content{
+            position: absolute;
+            width: max-content;
+            display: none;
+        }
+        .options-item:hover > .d-content{
+            display: block;
+        }
+        .d-content .row{
+            display: flex;
+            align-items: flex-start;
+            border-radius: 3px;
+            background-color: white;
+            flex-direction: column;
+        }
+        .options-item p{
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .options-item p svg{
+            margin-left: 10px;
+            transition: 0.6s;
+        }
+        .options-item:hover{
+            color: var(--main-red);
+        }
+        .options-item:hover > p svg{
+            transform: rotateX(180deg);
+        }
+        .d-content .row a{
+            color: black;
+            text-decoration: none;
+            width: 100%;
+            padding: 10px 15px;
+        }
+        .d-content .row a:hover{
+            background-color: rgba(168, 168, 168, 0.445);
+        }
+        .book-now{
+            padding: 10px 30px;
+            background-color: var(--main-red);
+            color: white;
+            transition: 0.6s;
+            text-decoration: none;
+            border: 2px solid var(--main-red);
+        }
+        .book-now:hover{
+            background-color: transparent;
+            color: var(--main-red);
+        }
+        .search-base{
+            background-color: white;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+    .footer{
+        padding: 40px;
+        background-color: rgba(173, 216, 230, 0.383);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .footer .one{
+        width: 30%;
+    }
+    .footer .parts{
+        height: 35vh;
+    }
+    .company{
+        color: black;
+        padding-bottom: 10px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 300;
+    }
+    .footer .one p{
+        text-align: justify;
+        margin-bottom: 15px;
+        margin-bottom: 25px;
+        font-family: 'Poppins', sans-serif;
+    }
+    .parts-title{
+        color: blue;
+        font-family: 'Poppins', sans-serif;
+        text-transform: uppercase;
+        font-size: 20px;
+        margin-bottom: 20px;
+        margin-left: 30px;
+    }
+    .footer .three ul li, .footer .two ul li{
+        list-style: none;
+        margin: 5px 0px;
+    }
+    .footer .two ul li a{
+        color: black;
+        transition: 0.4s;
+        font-family: 'Poppins', sans-serif;
+        text-decoration: none;
+    }
+    .footer .two ul li a:hover{
+        color: blue;
+        text-decoration-line: underline;
+        text-decoration-style: solid;
+        text-decoration-color: blue;
+    }
+    .footer .three ul li{
+        margin: 5px 0px;
+    }
+    .footer .three ul li p{
+        font-family: 'Poppins', sans-serif;
+    }
+    .footer .three ul li:nth-child(1){
+        width: 85%;
+        margin-bottom: 15px;
+    }
+    .credits{
+        color: rgb(71, 71, 71);
+        font-family: 'Poppins', sans-serif;
+        padding: 20px;
+        text-align: center;
+        font-size: 18px;
+    }
+    @media (max-width: 800px){
+        .footer{
+            flex-direction: column;
+        }
+        .footer .parts{
+            height: max-content;
+            margin-bottom: 60px;
+        }
+        .footer .one {
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .footer ul li{
+            display: flex;
+            flex-direction: column;
+            align-items:center;
+        }
+        .three ul{
+            display: flex;
+            flex-direction: column;
+            align-items:center
+        }
+        .footer .three ul li:nth-child(1){
+            width: 70%;
+            text-align: center;
+        }
+        .parts-title{
+            text-align: center;
+        }
+    }
+        .search-base form{
+                width: 50vw;
+                display: flex;
+                align-items: center;
+                background-color: transparent;
+                justify-content: space-between;
+            }
+            .search-base form input{
+                width: 100%;
+                outline: none;
+                padding: 15px;
+                padding-left: 20px;
+                background-color: transparent;
+                padding-right: 20px;
+                border-radius: 5px 0px 0px 5px;
+                font-size: 13px;
+                border: none;
+                font-family: 'Poppins', sans-serif;
+            }
+            .search-base form input::placeholder{
+                color: black;
+                font-weight: 600;
+                font-size: 17px;
+            }
+            .search-base form button{
+                border: none;
+                border-radius: 0px 5px 0px 5px;
+                font-size: 20px;
+                background-color: #4e73df;
+                color: white;
+                transition: 0.6s;
+                cursor: pointer;
+            }
+            .search-base form button{
+                font-size: 20px;
+                padding: 15px 20px;
+            }
+            @keyframes scroll-nav {
+                from{
+                    top: -100px;
+                }
+                to{
+                    top: 0px;
+                }
+            }
+
+        .login:hover::after {
+            width: 0% !important;
+        }
+
+        .navbar .logo .open,
+        .navbar .logo .close {
+            display: none;
+        }
+        @keyframes downto {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+        @keyframes fronto {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+
+        @media (max-width: 750px) {
+            .options-bar{
+                display: none;
+            }
+            .error {
+                animation: downto 0.4s ease-in forwards;
+            }
+            .error {
+                margin: 10px 0px;
+            }
+            .navbar-collapse{
+                margin-top: 30px;
+            }
+            .scroll-nav .options ul li a p{
+                display: none;
+            }
+            .near-me{
+                display: none;
+            }
+            .item-select{
+                margin-right: 0px !important;
+                margin-left: 0px !important;
+                margin-bottom: 15px;
+            }
+            .cstuff p{
+                flex-direction: row;
+                width: max-content;
+            }
+            .search-base form{
+            width: auto;
+          }
+        }
+        @media (max-width: 350px){
+          .search-base form{
+            width: auto;
+            height: 2.5rem;
+          }
+          #scroll-nav-btn{
+            height: 2.5rem;
+            padding: 1px 10px;
+            font-size: 16px;
+          }
+
+            .cstuff{
+                font-size: 13px;
+            }
+            .topbar .social a{
+                font-size: 13px;
+            }
+            .book-now{
+                margin-top: 15px;
+            }
+        }
+        .nav-link{
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+            transition: 0.6s;
+        }
+        .navbar-brand{
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+            text-transform: uppercase;
+            font-size: 25px;
+            color: var(--main-red) !important;
+        }
+        .navbar-toggler:focus{
+            outline: none;
+            border: none;
+            box-shadow: none;
+        }
+        .nav-link::after{
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            transition: 0.6s;
+            left: 0px;
+            bottom:5px;
+            height: 1px;
+            width: 0%;
+            background-color: var(--main-red);
+        }
+        .nav-link:hover > a::after{
+            width: 100%;
+        }
+        .nav-link:hover{
+            color: var(--main-red) !important;
+        }
+        .scroll-nav .options ul{
+            display: flex;
+            list-style: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .scroll-nav .options ul li{
+            margin: 0px 15px;
+        }
+        .scroll-nav .options ul li a{
+            text-decoration: none;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .scroll-nav .options ul li a i{
+            margin-right: 8px;
+        }
+        .scroller{
+            display: none;
+        }
+        .scroll-nav{
+            display: flex;
+            position: absolute;
+            transition: 0.6s;
+            margin: 0px;
+            top: 0px;
+            position: fixed;
+            animation: 0.6s fronto forwards;
+            width: 100%;
+            background-color: white;
+            z-index: 1;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.445);
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px;
+        }
+       .scroller.scroll{
+            display: block;
+        }
+        .logo-text{
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            font-size: 23px;
+        }
+
+        @media (max-width: 441px){
+            .logo-text{
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            font-size: 15px;
+        }
+        }
+        .topbar{
+            display: flex;
+            align-items: center;
+            background-color:#e5eceb;
+            justify-content: space-between;
+        }
+        .cstuff{
+            margin-top: 0.5rem;
+            color: var(--main-red);
+            /* margin: 15px 20px; */
+            margin-bottom: 0px;
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+        }
+        /* .cstuff p{
+            margin: 0px;
+        } */
+        .facebook:hover{
+            color: rgb(133, 133, 255);
+        }
+        .instagram:hover{
+            color: purple;
+        }
+        .twitter:hover{
+            color: skyblue;
+        }
+        .telegram:hover{
+            color: blue;
+        }
+        .cstuff i{
+            margin-right: 5px;
+        }
+        .topbar .social{
+            margin-left: 10px;
+        }
+        .topbar .social a{
+            text-decoration: none;
+            font-size:19px;
+            margin: 0px 5px;
+            color: black;
+        }
+        .nav-item select{
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+
+        /* Footer */
+
+
+
+
+            {% block style %}
+
+            {% endblock style %}
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H3D4RKKS07"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-H3D4RKKS07');
+    </script>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <div class="social">
+            <a target="_blank" href="https://www.facebook.com/clubofsolution"><i class="facebook fab fa-facebook"></i></a>
+            <a href="#!"><i class="instagram fab fa-instagram"></i></a>
+            <a href="#!"><i class="twitter fab fa-twitter"></i></a>
+            <a href="#!"><i class="telegram fab fa-telegram"></i></a>
+        </div>
+        <div class="cstuff">
+            <p style="margin-bottom: 0.5rem;padding-right: 20px;" class=""> <i class="fas fa-phone-alt"></i>+91 8597156552</p>
+        </div>
+    </div>
+
+    {% block main_nav %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-2 py-4">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Club of Solution</a>
+          <button style="border: none;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            
+            <i class="fas fa-bars"></i>
+
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+              {% if user.is_authenticated %}
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              {% endif %}
+              <li class="nav-item item-select mt-2 mx-2">
+                <select name="language" class="bg-light border-0 text-secondary" id="language">
+                    <option value="English">English</option>
+                    <option value="Bengali">Bengali</option>
+                    <option value="Hindi">Hindi</option>
+                </select>
+              </li>
+              {% if user.is_authenticated %}
+              {% if user.is_superuser %}
+              <li class="nav-item">
+                <a class="nav-link" href="/Admin/Dashboard">Dashboard</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="/Admin/user/Dashboard">Dashboard</a>
+              </li>
+              {% endif %}
+              {% else %}
+              <li class="nav-item mt-2">
+                  <a class="book-now" href="/register">Start Selling</a>
+              </li>
+              {% endif %}
+          </div>
+        </div>
+      </nav>
+      {% endblock main_nav %}
+      {% block navbar %}
+
+      <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light p-2 py-4">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Club of Solution</a>
+          <button style="border: none;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            
+            <i class="fas fa-bars"></i>
+
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <div class="search-base" data-aos="fade-up">
+                <form action="/location_manager/getlatlon" method="get">
+                  <!-- <input type="hidden" id="lat" name="user_latitude">
+                  <input type="hidden" id="lon" name="user_longitude"> -->
+                  <input type="search" id="search-base" name="search" id="search" autocomplete="off" placeholder="Search what's in your mind">
+                  <!-- <i style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#location" onclick="getlocation()" class="loc-icon fas fa-map-marker-alt"></i> -->
+                  <button id="scroll-nav-btn" type="submit">Search</button>
+                </form>
+              </div>
+              <!-- {% if user.is_authenticated %}
+              {% if user.is_superuser %}
+              <li class="nav-item">
+                <a class="nav-link" href="/Admin/Dashboard">Dashboard</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="/Admin/user/Dashboard">Dashboard</a>
+              </li>
+              {% endif %}
+              {% else %}
+              <li class="nav-item mt-2">
+                  <a class="book-now" href="/register">Start Selling</a>
+              </li>
+              {% endif %} -->
+          </div>
+        </div>
+      </nav>
+      {% endblock navbar %}
+
+      <div class="scroller">
+    <div class="scroll-nav">
+        
+        <div class="search-base" data-aos="fade-up">
+            <form action="/location_manager/getlatlon" method="get">
+              <!-- <input type="hidden" id="lat" name="user_latitude">
+              <input type="hidden" id="lon" name="user_longitude"> -->
+              <input type="search" id="search-base" name="search" id="search" autocomplete="off" placeholder="Search what's in your mind">
+              <i style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#location" onclick="getlocation()" class="loc-icon fas fa-map-marker-alt"></i>
+              <button id="scroll-nav-btn" type="submit">Search</button>
+            </form>
+          </div>
+        
+    </div>
+</div>
+
+    <div class="options-bar">
+        <div class="options-item">
+            <p>Travelling <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg></p>
+            <div style="z-index: 20;" class="d-content">
+                <div class="row">
+                    <a href="#">Taxi Stand</a>
+                    <a href="#">Bus Stand</a>
+                    <a href="#">Vehicle Rentals</a>
+                    <a href="#">Hotels</a>
+                    <a href="#">Home Stay</a>
+                </div>
+            </div>
+        </div>
+        <div class="options-item">
+            <p>Personal Care <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg></p>
+            <div style="z-index: 20;" class="d-content">
+                <div class="row">
+                    <a href="#">Taxi Stand</a>
+                    <a href="#">Bus Stand</a>
+                    <a href="#">Vehicle Rentals</a>
+                    <a href="#">Hotels</a>
+                    <a href="#">Home Stay</a>
+                </div>
+            </div>
+        </div>
+        <div class="options-item">
+            <p>Medical <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg></p>
+            <div style="z-index: 20;" class="d-content">
+                <div class="row">
+                    <a href="#">Taxi Stand</a>
+                    <a href="#">Bus Stand</a>
+                    <a href="#">Vehicle Rentals</a>
+                    <a href="#">Hotels</a>
+                    <a href="#">Home Stay</a>
+                </div>
+            </div>
+        </div>
+        <div class="options-item">
+            <p>Education <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg></p>
+            <div style="z-index: 20;" class="d-content">
+                <div class="row">
+                    <a href="#">Taxi Stand</a>
+                    <a href="#">Bus Stand</a>
+                    <a href="#">Vehicle Rentals</a>
+                    <a href="#">Hotels</a>
+                    <a href="#">Home Stay</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+
+    {% block body %}
+
+    {% endblock body %}
+
+
+    <!-- Remove the container if you want to extend the Footer to full width. -->
+    <div class="">
+
+        <!-- Footer -->
+        <footer
+                class="text-center text-lg-start text-white"
+                style="background-color: #1c2331"
+                >
+          <!-- Section: Social media -->
+          <section
+                   class="d-flex justify-content-between p-4"
+                   style="background-color: #4e73df"
+                   >
+            <!-- Left -->
+            <div class="me-5">
+              <span>Get connected with us on social networks:</span>
+            </div>
+            <!-- Left -->
+      
+            <!-- Right -->
+            <div>
+              <a style="text-decoration: none;" href="https://www.facebook.com/clubofsolution" class="text-white me-4">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a style="text-decoration: none;" href="#!" class="text-white me-4">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a style="text-decoration: none;" href="#!" class="text-white me-4">
+                <i class="fab fa-google"></i>
+              </a>
+              <a style="text-decoration: none;" href="#!" class="text-white me-4">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+            <!-- Right -->
+          </section>
+          <!-- Section: Social media -->
+      
+          <!-- Section: Links  -->
+          <section class="">
+            <div class="container text-center text-md-start mt-5">
+              <!-- Grid row -->
+              <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                  <!-- Content -->
+                  <h6 class="text-uppercase fw-bold">Club Of Solution</h6>
+                  <hr
+                      class="mb-4 mt-0 d-inline-block mx-auto"
+                      style="width: 60px; background-color: #7c4dff; height: 2px"
+                      />
+                  <p>
+                    Our Portal Provides everyone the Power to get the best out of
+                    the market at their nearest places. With every possible tools 
+                    in-hand.
+                  </p>
+                </div>
+                <!-- Grid column -->
+      
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                  <!-- Links -->
+                  <h6 class="text-uppercase fw-bold">Products</h6>
+                  <hr
+                      class="mb-4 mt-0 d-inline-block mx-auto"
+                      style="width: 60px; background-color: #7c4dff; height: 2px"
+                      />
+                  <p>
+                    <a style="text-decoration: none;" href="#!" class="text-white">MDBootstrap</a>
+                  </p>
+                  <p>
+                    <a style="text-decoration: none;" href="#!" class="text-white">MDWordPress</a>
+                  </p>
+                  <p>
+                    <a style="text-decoration: none;" href="#!" class="text-white">BrandFlow</a>
+                  </p>
+                  <p>
+                    <a style="text-decoration: none;" href="#!" class="text-white">Bootstrap Angular</a>
+                  </p>
+                </div>
+                <!-- Grid column -->
+      
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                  <!-- Links -->
+                  <h6 class="text-uppercase fw-bold">Useful links</h6>
+                  <hr
+                      class="mb-4 mt-0 d-inline-block mx-auto"
+                      style="width: 60px; background-color: #7c4dff; height: 2px"
+                      />
+                  <p>
+                    <a style="text-decoration: none;" href="/Admin/user/Dashboard" class="text-white">Your Dashboard</a>
+                  </p>
+                  <p>
+                    <a style="text-decoration: none;" href="#banner" class="text-white">Search Your Query</a>
+                  </p>
+                  <p>
+                    <a style="text-decoration: none;" href="/register" class="text-white">Become our Partner</a>
+                  </p>
+                  <p>
+                    <a target="_blank" style="text-decoration: none;" href="https://www.facebook.com/clubofsolution" class="text-white">Need Help</a>
+                  </p>
+                </div>
+                <!-- Grid column -->
+      
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                  <!-- Links -->
+                  <h6 class="text-uppercase fw-bold">Contact</h6>
+                  <hr
+                      class="mb-4 mt-0 d-inline-block mx-auto"
+                      style="width: 60px; background-color: #7c4dff; height: 2px"
+                      />
+                  <p><i style="margin-right: 5px;" class="fas fa-home mr-3"></i>Gunja Bari, Near Bank Of India, Kameswari Rd, Cooch Behar, West Bengal 736101</p>
+                  <p><i class="fas fa-envelope mr-3"></i> support@clubofsolution.com</p>
+                  <p><i class="fas fa-phone mr-3"></i> +91 85971 56552</p>
+                </div>
+                <!-- Grid column -->
+              </div>
+              <!-- Grid row -->
+            </div>
+          </section>
+          <!-- Section: Links  -->
+      
+          <!-- Copyright -->
+          <div class="p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            <p class="text-center">© 2020 Copyright:<a class="text-white" href="https://clubofsolution.com/">ClubOfSolution.com</a></p>
+          </div>
+          <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+      
+      </div>
+      <!-- End of .container -->
+
+
+<script>
+  $(document).ready(function(){
+$("#contactus-submit").click(function(){
+var r= $('<i class="fa fa-spinner fa-spin"></i>');
+$("#contactus-submit").html(r);
+$("#contactus-submit").append(" Sending...");
+$("#contactus-submit").attr("disabled", true);
+
+
+setTimeout(function(){
+$("#contactus-submit").attr("disabled", false);
+$("#contactus-submit").html('Send');
+
+}, 3000);
+
+
+});
+});
+</script>
+
+
+<script type="text/javascript">
+  $('.item-container').slick({
+    speed: 300,
+    infinite: false,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          infinite: false,
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          infinite: false,
+          slidesToShow: 2.15,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  });
+  window.onscroll = function () { scrollFunction() };
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+      $(".scroller").addClass("scroll");
+    } else {
+      $(".scroller").removeClass("scroll");
+    }
+  }
+</script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 2000,
+  });
+</script>
+
+<script>
+
+  "use strict";
+  
+  let autocomplete = (inp, arr) => {
+    /*the autocomplete function takes two arguments,
+    the text field element and an array of possible autocompleted values:*/
+    let currentFocus;
+    /*execute a function when someone writes in the text field:*/
+    inp.addEventListener("input", function(e) {
+      let a, //OUTER html: variable for listed content with html-content
+        b, // INNER html: filled with array-Data and html
+        i, //Counter
+        val = this.value;
+  
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+  
+      if (!val) {
+        return false;
+      }
+  
+      currentFocus = -1;
+  
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.style.display = "flex"
+      a.setAttribute("class", "autocomplete-items list-group text-left");
+      
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+  
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          b.setAttribute("class","list-group-item list-group-item-action");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+          b.addEventListener("click", function(e) {
+            /*insert the value for the autocomplete text field:*/
+            inp.value = this.getElementsByTagName("input")[0].value;
+            /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+            closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+    });
+    
+    /*execute a function presses a key on the keyboard:*/
+    inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+          increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) {
+        //up
+        /*If the arrow UP key is pressed,
+          decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+    });
+    
+    let addActive = (x) => {
+      /*a function to classify an item as "active":*/
+      if (!x) return false;
+      /*start by removing the "active" class on all items:*/
+      removeActive(x);
+      if (currentFocus >= x.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = x.length - 1;
+      /*add class "autocomplete-active":*/
+      x[currentFocus].classList.add("active");
+    }
+    
+    let removeActive = (x) => {
+      /*a function to remove the "active" class from all autocomplete items:*/
+      for (let i = 0; i < x.length; i++) {
+        x[i].classList.remove("active");
+      }
+    }
+    
+    let closeAllLists = (elmnt) => {
+      /*close all autocomplete lists in the document,
+      except the one passed as an argument:*/
+      var x = document.getElementsByClassName("autocomplete-items");
+      for (var i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != inp) {
+          x[i].parentNode.removeChild(x[i]);
+        }
+      }
+    }
+    
+    /*execute a function when someone clicks in the document:*/
+    document.addEventListener("click", function(e) {
+      closeAllLists(e.target);
+    });
+    
+  };
+  
+  let query = {{ queries|safe }};
+  
+  
+  
+  /*An array containing all the country names in the world:*/
+  let countries = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Anguilla",
+    "Antigua & Barbuda",
+    "Argentina",
+    "Armenia",
+    "Aruba",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bermuda",
+    "Bhutan",
+    "Bolivia",
+    "Bosnia & Herzegovina",
+    "Botswana",
+    "Brazil",
+    "British Virgin Islands",
+    "Brunei",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "Cape Verde",
+    "Cayman Islands",
+    "Central Arfrican Republic",
+    "Chad",
+    "Chile",
+    "China",
+    "Colombia",
+    "Congo",
+    "Cook Islands",
+    "Costa Rica",
+    "Cote D Ivoire",
+    "Croatia",
+    "Cuba",
+    "Curacao",
+    "Cyprus",
+    "Czech Republic",
+    "Denmark",
+    "Djibouti",
+    "Dominica",
+    "Dominican Republic",
+    "Ecuador",
+    "Egypt",
+    "El Salvador",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Estonia",
+    "Ethiopia",
+    "Falkland Islands",
+    "Faroe Islands",
+    "Fiji",
+    "Finland",
+    "France",
+    "French Polynesia",
+    "French West Indies",
+    "Gabon",
+    "Gambia",
+    "Georgia",
+    "Germany",
+    "Ghana",
+    "Gibraltar",
+    "Greece",
+    "Greenland",
+    "Grenada",
+    "Guam",
+    "Guatemala",
+    "Guernsey",
+    "Guinea",
+    "Guinea Bissau",
+    "Guyana",
+    "Haiti",
+    "Honduras",
+    "Hong Kong",
+    "Hungary",
+    "Iceland",
+    "India",
+    "Indonesia",
+    "Iran",
+    "Iraq",
+    "Ireland",
+    "Isle of Man",
+    "Israel",
+    "Italy",
+    "Jamaica",
+    "Japan",
+    "Jersey",
+    "Jordan",
+    "Kazakhstan",
+    "Kenya",
+    "Kiribati",
+    "Kosovo",
+    "Kuwait",
+    "Kyrgyzstan",
+    "Laos",
+    "Latvia",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Macau",
+    "Macedonia",
+    "Madagascar",
+    "Malawi",
+    "Malaysia",
+    "Maldives",
+    "Mali",
+    "Malta",
+    "Marshall Islands",
+    "Mauritania",
+    "Mauritius",
+    "Mexico",
+    "Micronesia",
+    "Moldova",
+    "Monaco",
+    "Mongolia",
+    "Montenegro",
+    "Montserrat",
+    "Morocco",
+    "Mozambique",
+    "Myanmar",
+    "Namibia",
+    "Nauro",
+    "Nepal",
+    "Netherlands",
+    "Netherlands Antilles",
+    "New Caledonia",
+    "New Zealand",
+    "Nicaragua",
+    "Niger",
+    "Nigeria",
+    "North Korea",
+    "Norway",
+    "Oman",
+    "Pakistan",
+    "Palau",
+    "Palestine",
+    "Panama",
+    "Papua New Guinea",
+    "Paraguay",
+    "Peru",
+    "Philippines",
+    "Poland",
+    "Portugal",
+    "Puerto Rico",
+    "Qatar",
+    "Reunion",
+    "Romania",
+    "Russia",
+    "Rwanda",
+    "Saint Pierre & Miquelon",
+    "Samoa",
+    "San Marino",
+    "Sao Tome and Principe",
+    "Saudi Arabia",
+    "Senegal",
+    "Serbia",
+    "Seychelles",
+    "Sierra Leone",
+    "Singapore",
+    "Slovakia",
+    "Slovenia",
+    "Solomon Islands",
+    "Somalia",
+    "South Africa",
+    "South Korea",
+    "South Sudan",
+    "Spain",
+    "Sri Lanka",
+    "St Kitts & Nevis",
+    "St Lucia",
+    "St Vincent",
+    "Sudan",
+    "Suriname",
+    "Swaziland",
+    "Sweden",
+    "Switzerland",
+    "Syria",
+    "Taiwan",
+    "Tajikistan",
+    "Tanzania",
+    "Thailand",
+    "Timor L'Este",
+    "Togo",
+    "Tonga",
+    "Trinidad & Tobago",
+    "Tunisia",
+    "Turkey",
+    "Turkmenistan",
+    "Turks & Caicos",
+    "Tuvalu",
+    "Uganda",
+    "Ukraine",
+    "United Arab Emirates",
+    "United Kingdom",
+    "United States of America",
+    "Uruguay",
+    "Uzbekistan",
+    "Vanuatu",
+    "Vatican City",
+    "Venezuela",
+    "Vietnam",
+    "Virgin Islands (US)",
+    "Yemen",
+    "Zambia",
+    "Zimbabwe"
+  ];
+  
+  /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+  autocomplete(document.getElementById("search-base"), query);
+  /**
+   * CREATES OUTPUT LIKE THIS:
+   *
+   * <div id="myInputautocomplete-list" class="autocomplete-items">
+   *    <div>
+   *       <strong>A</strong>fghanistan<input value="Afghanistan" type="hidden">
+   *    </div>
+   *    <div><strong>A</strong>lbania<input value="Albania" type="hidden"></div>
+   *    <div><strong>A</strong>zerbaijan<input value="Azerbaijan" type="hidden"></div>
+   *    ...
+   *    ...
+   *    ...
+   * </div>
+   */
+  
+  
+  </script>
+
+</html>

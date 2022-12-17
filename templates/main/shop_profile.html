@@ -1,0 +1,621 @@
+{% extends 'Base/base.html' %}
+
+{% load static %}
+{% block title %}
+{{ shop_view.shop.Name }}
+{% endblock title %}
+
+
+{% block main_nav %}{% endblock main_nav %}
+{% block style %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+
+    * {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    .carousel {
+        height: 60vh !important;
+        position: relative;
+    }
+
+    .carousel .carousel-inner .carousel-item img {
+        object-fit: cover;
+        height: 60vh;
+    }
+
+    .dp img {
+        border-radius: 1000px;
+        height: 200px;
+        object-fit: cover;
+        position: absolute;
+        top: 75vh;
+        left: 50px;
+    }
+
+    .head {
+        width: 50vw;
+        margin-top: 130px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .head-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .verified {
+        margin-top: 20px;
+        font-size: 23px;
+    }
+
+    .not-verified {
+        margin-top: 20px;
+        font-size: 23px;
+    }
+
+    .verified i {
+        color: green;
+        margin-right: 8px;
+    }
+
+    .not-verified i {
+        color: rgb(119, 119, 119);
+        margin-right: 8px;
+    }
+
+    .shop-name {
+        font-family: 'Mate SC', 'Poppins', sans-serif;
+        text-transform: uppercase;
+    }
+
+    .info p {
+        font-size: 18px;
+    }
+
+    .details-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .details {
+        width: 50vw;
+        margin: 30px 0px;
+        text-align: justify;
+        font-style: italic;
+    }
+
+    .contact {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .contact p {
+        width: 50vw;
+    }
+
+    .contact p i {
+        margin-right: 10px;
+    }
+
+    .work-con {
+        display: flex;
+        align-items: center;
+        margin-bottom: 80px;
+        justify-content: center;
+    }
+
+    .workers {
+        display: flex;
+        width: 53vw;
+        align-items: center;
+    }
+
+    .work-item {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .work-item p {
+        font-size: 20px;
+    }
+
+    .work-item img {
+        height: 150px;
+    }
+    .container-time {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
+}
+.timeline {
+  width: 80%;
+  height: auto;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  cursor: pointer;
+}
+
+.timeline ul {
+  list-style: none;
+}
+.timeline ul li {
+  padding: 20px;
+  color: black;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.600);
+  margin-bottom: 20px;
+}
+.timeline ul li:last-child {
+  margin-bottom: 0;
+}
+.timeline-content h1 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  margin-bottom: 10px;
+}
+.timeline-content p {
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 300;
+}
+.timeline-content .date {
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 10px;
+  padding: 10px;
+  position: absolute;
+  color: white;
+  top: 0px;
+  border-radius: 0px 0px 0px 5px;   
+  right: 0px;
+  background-color: rgb(117, 190, 0);
+}
+  .timeline:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-color: grey;
+  }
+  .timeline ul li {
+    width: 50%;
+    position: relative;
+    margin-bottom: 50px;
+  }
+  .head-part-time{
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+  }
+  .timeline ul li:nth-child(odd) {
+    float: left;
+    clear: right;
+    transform: translateX(-40px);
+    border-radius: 10px;
+  }
+  .timeline ul li:nth-child(even) {
+    float: right;
+    clear: left;
+    transform: translateX(30px);
+    border-radius: 10px;
+  }
+  .timeline ul li::before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    transition: 0.4s;
+    width: 20px;
+    border-radius: 50%;
+    background-color: gray;
+    top: 0px;
+  }
+  .timeline ul li:nth-child(odd)::before {
+    transform: translate(50%, -50%);
+    right: -25px;
+  }
+  .timeline ul li:nth-child(even)::before {
+    transform: translate(-50%, -50%);
+    left: -45px;
+  }
+  .timeline ul li:hover::before {
+    background-color: rgb(117, 190, 0);
+  }
+  .timeline ul  li{
+    padding: 0px;
+  }
+  .timeline-content .image{
+      width: 100%;
+      height: 35vh;
+    position: relative;
+  }
+  .timeline-content .image img{
+      width: 100%;
+      object-fit: cover;
+      height: 100%;
+  }
+  .timeline-content .text{
+      transition: 0.5s;
+      padding: 20px;
+  }
+  .image::after{
+      transition: 0.5s;
+  }
+  .timeline-content:hover > .image::after{
+        content:'';
+        position:absolute;
+        left:0; 
+        transition: 0.6s;
+        top:0px;
+        width:100%;
+        height:100%;
+        background: linear-gradient(rgba(0,0,0,0.200) , rgba(0,0,0,0.200));
+        display:inline-block;
+    }
+    .timeline-content:hover > .text{
+        color: rgb(84, 136, 1);
+    }
+    @media(max-width: 700px) {
+        .head {
+            justify-content: left;
+            width: 90vw;
+            flex-direction: column;
+        }
+
+        .details {
+            width: 90vw;
+        }
+
+        .dp img {
+            height: 150px;
+            left: 30%;
+            top: 70vh;
+        }
+
+        .info {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            width: 83vw;
+        }
+
+        .contact p {
+            width: 90vw;
+        }
+
+        .workers {
+            width: 90vw;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .timeline:before{
+            left: 96.5%;
+        }
+        .timeline ul li{
+            width: initial;
+        }
+        .timeline ul li:nth-child(odd) {
+            float: none;
+            border-radius: 10px;
+        }
+        .timeline ul li:nth-child(even) {
+            float: none;
+            transform: translateX(-40px);
+            border-radius: 10px;
+        }
+        .timeline ul li::before {
+            content: "";
+            position: absolute;
+            height: 20px;
+            transition: 0.4s;
+            width: 20px;
+            border-radius: 50%;
+            background-color: gray;
+            top: 0px;
+        }
+        .timeline ul li:nth-child(odd)::before {
+            transform: translate(50%, -50%);
+            right: -30px;
+        }
+        .timeline ul li:nth-child(even)::before {
+            transform: translate(50%, -50%);
+            left: 103%;
+        }
+        .timeline ul li h1{
+            font-size: 18px;
+        }
+        .timeline-content p{
+            font-size: 13px;
+            line-height: 25px;
+        }
+
+    }
+
+    .cstuff p i {
+        display: none;
+    }
+</style>
+
+{% endblock style %}
+
+{% block body %}
+
+<body>
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/media/{{ shop_view.slider1 }}" class="d-block w-100" alt="{{ shop_view.slider1 }}">
+            </div>
+            <div class="carousel-item">
+                <img src="/media/{{ shop_view.slider2 }}" class="d-block w-100" alt="{{ shop_view.slider2 }}">
+            </div>
+            <div class="carousel-item">
+                <img src="/media/{{ shop_view.slider3 }}" class="d-block w-100" alt="{{ shop_view.slider3 }}">
+            </div>
+            <!-- <div class="carousel-item">
+        <img src="/media/{{ shop_view.slider4 }}" class="d-block w-100" alt="{{ shop_view.slider4 }}">
+      </div> -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="dp">
+        <img src="/media/{{ shop_view.shop.Display_Image }}" alt="" srcset="">
+    </div>
+    <div class="head-container">
+        <div class="head">
+            <div class="title-sec">
+                <h1 class="shop-name">{{ shop_view.shop.Name }}</h1>
+                {% if shop_view.shop.is_verified %}
+                <p class="verified"><i class="fas fa-check-circle"></i>Verified</p>
+                {% else %}
+                <p class="not-verified"><i class="fas fa-check-circle"></i>Not Verified</p>
+                {% endif %}
+            </div>
+            <div class="info">
+                <p><i class="fas fa-chevron-right"></i> {{ shop_view.shop_type }}</p>
+                {% if opened %}
+                <p><i style="color: rgb(29, 165, 29)" class="fas fa-door-open"></i> Opened</p>
+                {% endif %}
+                {% if closed %}
+                <p><i  style="color: red" class="fas fa-door-closed"></i> Closed</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="details-container">
+        <div class="details">
+            {% if shop_view.about_sitution == 1 %}
+            <p>{{ shop_view.shop.About }}</p>
+                {% else %}
+            <p>{{ shop_view.about }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="contact">
+        <p><i class="fas fa-phone-alt"></i> {{ shop_view.shop.phone }}</p>
+        <p><i class="fas fa-city"></i>{{ shop_view.shop.location }}</p>
+        <p><i class="fas fa-globe-asia"></i>{{ shop_view.shop.city }}</p>
+    </div>
+
+    <div class="work-con">
+        <div class="workers">
+            <div class="work-item">
+                <img style="border-radius: 50%;" src="{% static 'owner.jpg' %}" alt="" srcset="">
+                <p>{{ members.shop.user }}</p>
+            </div>
+            {% if members.user1 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user1 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user2 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user2 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user3 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user3 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user4 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user4 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user5 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user5 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user6 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user6 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user7 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user7 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user8 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user8 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user9 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user9 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user10 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user10 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user11 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user11 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user12 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user12 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user13 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user13 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user14 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user14 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user15 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user15 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user16 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user16 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user17 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user17 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user18 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user18 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user19 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user19 }}</p>
+            </div>
+            {% endif %}
+            
+            {% if members.user20 != None %}
+            <div class="work-item">
+                <img src="{% static 'user.jpg' %}" alt="" srcset="">
+                <p>{{ members.user20 }}</p>
+            </div>
+            {% endif %}
+            
+        </div>
+        
+    </div>
+
+    <h1 style="text-align:start;font-family: 'Times New Roman', Times, serif; padding-left: 20px;">Available Offers</h1>
+
+    <div style="background-color: #e9e9e9;" class="container-time">
+        <div class="timeline">
+          <ul>
+            {% for offers in offers %}
+            <li data-aos="fade-in">
+                <div class="timeline-content">
+                    <div class="image">
+                        <img src="{{offers.picture.url}}" alt="" srcset="">
+                    </div>
+                      <div class="text">
+                          <div class="head-part-time">
+                              <h1>{{offers.Offer_Name}} </h1>
+                              <h3 class="date">Ends In : {{ offers.Ending_Date|timeuntil:offers.created }}</h3>
+                          </div>
+                          <p>{{offers.text}}</p>
+                      </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+      AOS.init({
+          duration: 2000,
+      });
+  </script>
+</body>
+{% endblock body %}

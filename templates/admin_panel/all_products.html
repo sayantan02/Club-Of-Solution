@@ -1,0 +1,47 @@
+{% extends 'Base/base_admin.html' %}
+{% block title %} Products {% endblock title %}
+{% block modules %}{% endblock modules %}
+{% block head %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+        </style>
+</head>
+{% endblock head %}
+{% block body %}
+<body style="background-color: #f3f3f3;">
+    <div class="album py-5 bg-light">
+        <div class="container">
+    
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              {% for i in products %}
+            <div class="col">
+              <div class="card shadow-sm">
+    
+                <div class="card-body">
+                  <h3 style="font-family: 'Poppins', sans-serif;" class="card-text text-center">{{ i.Product_Name }}</h3>
+                  <hr>
+                  <h6 class="card-text">Shop: <b style="color: green;">{{ i.shop.Name }}</b></h6>
+                  <small class="text-muted"><i class="mr-2 fas fa-rupee-sign">:</i>{{ i.Product_M_R_P }}</small>
+                  <div class="d-flex justify-content-between align-items-center">
+                      <small class="text-muted">{{ i.added|timesince }}</small>
+                    <div class="btn-group">
+                    </div>
+                    <a href="/Admin/deleteitems/product/Admin+allproducts/{{ i.id }}"><button type="button" class="btn btn-sm btn-outline-danger">Delete</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <h2>No products here</h2>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+</body>
+{% endblock body %}

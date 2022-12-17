@@ -1,0 +1,300 @@
+{% extends 'Base/base.html' %}
+{% load static %}
+{% block main_nav %}{% endblock main_nav %}
+{% block head %}
+<meta charset="UTF-8">
+<link rel="shortcut icon" href="logo.jpeg" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club Of Solution - </title>
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+    .search-item .image {
+        display: flex;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 29vw;
+    }
+
+    .search-item .image #img {
+        transition: 0.6s;
+        width: 27.5vw;
+        border-radius: 10px;
+    }
+
+    .search-item .text {
+        margin: 0px 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        color: black;
+        margin-top: 10px;
+        font-size: 23px;
+    }
+
+    a {
+        transition: 0.6s;
+        font-size: 16px;
+        text-decoration: none;
+        margin: 8px 0px;
+        font-weight: 500;
+        color: rgb(77, 77, 77);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    a i {
+        margin-right: 8px;
+    }
+
+    .nav-item select{
+        margin-top: 7px;
+    }
+    .div-1, .div-2{
+        display: flex;
+    }
+    .verified i{
+        color: green;
+        margin-right: 5px;
+    }
+    .non-verified i{
+        color: grey;
+        margin-right: 5px;
+    }
+    .ratings i{
+        color: orange;
+        margin-right: 5px;
+    }
+    .ratings{
+        margin-right: 10px;
+    }
+    .open{
+        margin-right: 10px;
+    }
+    .div-2 p i{
+        margin-right: 5px;
+    }
+
+    .search-item1 {
+        display: flex;
+        margin-left: 30px;
+        border-radius: 10px;
+        background-color: white;
+    }
+
+    .search-item2{
+        display: flex;
+        padding: 10px;
+        width: 90vw;
+        margin-left: 30px;
+        border-radius: 10px;
+        /* margin-bottom: 20px; */
+        background-color: rgb(202, 202, 202);
+    }
+
+    .search-item3{
+        display: flex;
+        padding: 10px;
+        width: 90vw;
+        margin-left: 30px;
+        border-radius: 10px;
+        /* margin-bottom: 20px; */
+        background-color: rgb(245, 229, 205);
+    }
+
+    @media(max-width: 700px) {
+        .search-item {
+            margin-left: 10px;
+        }
+        .search-item2 {
+            margin-left: 10px;
+        }
+        .search-item3 {
+            margin-left: 10px;
+        }
+        .title{
+            font-size: 21px;
+        }
+
+        .search-item .image {
+            display: flex;
+            width: 40%;
+            height: 100%;
+        }
+        .search-item .text .title{
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: medium;
+            margin-top: 0px;
+        }
+        .search-item .text a{
+            font-size: 10px;
+            margin: 5px;
+        }
+        .search-item .text {
+            margin: 10px;
+        }
+
+        .output {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .search-item {
+            width: 90vw;
+        }
+
+        .search-item .image #img {
+            width: 90vw;
+        }
+        .div-1 p, .div-2 p{
+            font-size: 13px;
+        }
+    }
+
+    .btn-warning {
+    background: none #4e73df;
+    color: #ffffff;
+    fill: #ffffff;
+    border: none;
+    font-size: 12px;
+    text-decoration: none;
+    outline: 0;
+    box-shadow: -1px 6px 19px rgba(247, 129, 10, 0.25);
+    border-radius: 100px
+  }
+
+  .btn-warning:hover {
+    background: none #5f7edd;
+    color: #ffffff;
+    box-shadow: -1px 6px 13px rgba(255, 150, 43, 0.35)
+  }
+</style>
+{% endblock head %}
+{% block body %}
+
+<body>
+
+    <div class="output">
+        {% for i in products %}
+        {% if i.shop.Approved %}
+        <div class="search-item1">
+            <div class="image">
+                <img id="img" style="border-radius: 20%;height: 11rem;width: 11rem;" src="/media/{{ i.shop.Display_Image }}" alt="{{ i.shop.Display_Image }}" />
+            </div>
+            <div  style="padding-left: 20px;padding-top: 10px;padding-right: 5px;" class="text">
+                <a href="/shopview/{{ i.shop.id }}" class="title">{{ i.shop.Name }}</a>
+                <div class="div-1">
+                    <p class="ratings"><i class="fas fa-star"></i>4.0</p>
+                    {% if i.shop.is_verified %}
+                    <p class="verified"><i class="fas fa-check-circle"></i> Verified</p>
+                    {% else %}
+                    <p class="non-verified"><i class="fas fa-check-circle"></i>Not Verified</p>
+                    {% endif %}
+                </div>
+                <div class="div-2">
+                    <!-- <p class="open"><i class="fas fa-door-closed"></i>Open Now</p>
+                    <p class="open"><i class="fas fa-door-closed"></i>Closed</p> -->
+                    <p>Your Product is available here</p>
+                </div>
+                <div class="div-2">
+                    <p><img src="/static/owner.jpg" style="border-radius: 50%;" width="40px" height="40px" alt="" srcset=""></p>
+                    <p style="margin-top: 10px;margin-left: 10px;">{{ i.shop.user }}</p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% endif %}
+        {% endfor %}
+
+        {% for i in shops %}
+        <div class="search-item1">
+            <div class="image">
+                <img id="img" style="border-radius: 20%;height: 11rem;width: 11rem;" src="/media/{{ i.Display_Image }}" alt="{{ i.Display_Image }}" />
+                <!-- <img src="/media/{{ i.Display_Image }}" alt="{{ i.Display_Image }}" /> -->
+            </div>
+
+            <div  style="padding-left: 20px;padding-top: 10px;padding-right: 5px;" class="text">
+                <a href="/shopview/{{ i.id }}" class="title">{{ i.Name }}</a>
+                <div class="div-1">
+                    <p class="ratings"><i class="fas fa-star"></i>4.0</p>
+                    {% if i.is_verified %}
+                    <p class="verified"><i class="fas fa-check-circle"></i> Verified</p>
+                    {% else %}
+                    <p class="non-verified"><i class="fas fa-check-circle"></i>Not Verified</p>
+                    {% endif %}
+                </div>
+                <div class="div-2">
+                    <!-- <p class="open"><i class="fas fa-door-closed"></i>Open Now</p>
+                    <p class="open"><i class="fas fa-door-closed"></i>Closed</p> -->
+                </div>
+                <div class="div-2">
+                    <p><img src="/static/owner.jpg" style="border-radius: 50%;" width="40px" height="40px" alt="" srcset=""></p>
+                    <p style="margin-top: 10px;margin-left: 10px;">{{ i.user }}</p>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        {% endfor %}
+
+        {% for i in subcategory %}
+        <div class="search-item3">
+            <div class="image">
+                <img style="border-radius: 20%;height: 8rem;width: 8rem;" src="{% static 'hotel2.png' %}" alt="Sayantan" />
+                <!-- <img src="/media/{{ i.Display_Image }}" alt="{{ i.Display_Image }}" /> -->
+            </div>
+            <div style="padding-left: 20px;padding-top: 10px;" class="text">
+                <a href="/shopview/{{ i.id }}" class="title">{{ i.Name }}</a>
+                <div class="div-1">
+                    <p class="verified"><i class="fas fa-check-circle"></i>{{ i.Items }} items</p>
+                </div>
+                <div class="div-2">
+                    <a href="/shops/{{ i.slug }}/{{ i.id }}"><button class="btn btn-warning">Show</button></a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+
+        {% for i in users %}
+        <div class="search-item2">
+            <div class="image">
+                <img style="border-radius: 50%;height: 8rem;width: 8rem;" src="{% static 'profile.jpg' %}" alt="Sayantan" />
+                <!-- <img src="/media/{{ i.Display_Image }}" alt="{{ i.Display_Image }}" /> -->
+            </div>
+            <div style="padding-left: 20px;padding-top: 10px;" class="text">
+                <a href="/shopview/{{ i.id }}" class="title">{{ i.user.username }}</a>
+                <div class="div-1">
+                    {% if i.payment_succeed %}
+                    <p class="verified"><i class="fas fa-check-circle"></i>Activited</p>
+                    {% else %}
+                    <p class="non-verified"><i class="fas fa-check-circle"></i>Dis Activited</p>
+                    {% endif %}
+                </div>
+                <div class="div-2">
+                    <a href="#!"><button class="btn btn-warning">Show</button></a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+
+    <script>
+
+        function searched() {
+            document.getElementById("search").submit();
+        }
+    </script>
+</body>
+{% endblock body %}

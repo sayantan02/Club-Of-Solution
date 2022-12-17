@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClubOfSolution - Goelocation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    {% load static %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        img{
+            max-width: 70vw;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        button{
+            color: white;
+            transition: 0.6s;
+            border: 1px solid #4e73df;
+            background: #4e73df;
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            padding: 10px 70px;
+        }
+        button:hover{
+            background: transparent;
+            color: #4e73df;
+        }
+        @media(max-width: 700px){
+            img{
+                max-width: 100vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <img src="{% static 'Club_Of_Solution.gif' %}" alt="">
+    <h1>Give the Location Access</h1>
+    <form id="myform" method="POST">
+        {% csrf_token %}
+        <input id="shop_id" type="hidden" name="shop_id" value="">
+        <input id="latitude" type="hidden" name="lat" value="">
+        <input id="longitude" type="hidden" name="lon" value="">
+        
+        <button id="loader" class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="visually-hidden">Loading...</span>
+          </button>
+        </form>
+        <button onclick="getlocation()">Get Location</button>
+
+</body>
+
+<script>
+    document.getElementById("loader").style.display = "none";
+
+    function getlocation() {
+        document.getElementById("loader").style.display = "block"
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition)
+      }
+      else {
+        alert("Sorry! your browser is not supporting, try using another browser");
+      }
+    }
+  
+    function showPosition(position) {
+        document.getElementById("latitude").value = position.coords.latitude;
+        document.getElementById("longitude").value = position.coords.longitude;
+        document.getElementById("myform").submit();
+    }
+  
+  </script>
+
+</html>

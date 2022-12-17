@@ -1,0 +1,205 @@
+{% extends "Base/base.html" %}
+
+{% block style %}
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+        .contact{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 50px;
+            margin-top: 70px;
+        }
+        form{
+            border: 1px solid black;
+            padding: 30px;
+        }
+        ::placeholder{
+            font-family: 'Montserrat', Arial, sans-serif;
+            text-transform: uppercase;
+            color: black;
+            font-size: 15px;
+        }
+        .share-part{
+            display: flex;
+        }
+        .share-part{
+            width: 100%;
+        }
+        .share-part .input-div{
+            width: 100%;
+        }
+        .share-part .input-div input{
+            width: 100%;
+        }
+        .subject{
+            width: 100%;
+        }
+        textarea{
+            width: 100%;
+            resize: none;
+        }
+        .share-part .input-div input{
+            margin: 0px;
+        }
+        input, textarea{
+            margin: 15px 0px;
+            border: none;
+            font-family: 'Montserrat', Arial, sans-serif;
+            color: black;
+            font-size: 15px;
+            text-transform: uppercase;
+            outline: none;
+            border-bottom: 1px solid #474544;
+            padding: 15px 0px;
+        }
+        .share-part .input-div .email{
+            width: 90%;
+            margin-left: 20px;
+        }
+        iframe{
+            border: 1px solid black;
+            margin-right: 20px;
+        }
+        .submit{
+            border: 1px solid #474544;
+            font-family: 'Montserrat', Arial, sans-serif;
+            text-transform: uppercase;
+            padding: 15px 40px;
+            transition: 0.4s;
+            border-radius: 5px;
+        }
+        .submit:hover{
+            background-color: #474544;
+            color: white;
+            cursor: pointer;
+        }
+        .title {
+            color: #474544;
+            font-size: 32px;
+            margin-top: 50px;
+            font-weight: 300;
+            letter-spacing: 7px;
+            text-align: center;
+            font-family: 'Montserrat', Arial, sans-serif;
+            text-transform: uppercase;
+        }
+
+        .underline {
+            border-bottom: solid 1px #474544;
+            margin: 20px auto;
+            width: 80px;
+        }
+        @media(max-width: 800px){
+            .contact{
+                flex-direction: column;
+                width: 90vw;
+            }
+            form{
+                width: 85vw;
+                margin-right: 20px;
+                margin-top: 50px;
+            }
+            iframe{
+                width: 90vw;
+            }
+        }
+        /* .success{
+            color: darkgreen;
+            background-color: lightgreen;
+            padding: 10px 20px;
+            text-align: center;
+            margin: 20px 0px;
+            font-size: 15px;
+            font-family: 'Montserrat', Arial, sans-serif;
+            text-transform: uppercase;
+            display: none;
+        } */
+        input:focus, textarea:focus{
+            border-bottom: 1px solid var(--main-red);
+        }
+
+        .success {
+            background-color: lightgreen;
+            color: green;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        .refused{
+            background-color: rgb(226, 65, 65);
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+
+{% endblock style %}
+
+{% block title %}
+Contact Us
+{% endblock title %}
+
+{% block body %}
+
+        <h1 class="title">&bull; Contact Us &bull;</h1>
+    <div class="underline"></div>
+
+    <div class="contact">
+    
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d531.5514880012794!2d89.44573476789932!3d26.331747113981773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e2ff56daa49515%3A0x592e8ddcfd231272!2sDR%20ZONE!5e0!3m2!1sen!2sin!4v1625632939332!5m2!1sen!2sin" width="650" height="600" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <div class="form">
+
+
+            <form action="/contact/cont/" method="post">
+                {% csrf_token %}
+                {% if success %}
+                <div class="success">
+                    Your Message Sent :)
+                    <i onclick="cut()" style="cursor:pointer;margin-left: 10px;float: right;" class="fas fa-times"></i>
+                </div>
+                {% endif %}
+        
+                {% if refused %}
+                <div class="refused">
+                    Something Went Wrong :(
+                    <i onclick="refcut()" style="cursor:pointer;margin-left: 10px;" class="fas fa-times"></i>
+                </div>
+                {% endif %}
+
+                <div class="share-part">
+
+                    <div class="input-div">
+                        <input type="text" name="name" placeholder="Your Full Name" required>
+                    </div>
+                    
+                    <div class="input-div">
+                        <input class="email" type="tel" name="contact" placeholder="your Contact Number" required>
+                    </div>
+
+                </div>
+
+                <div class="input-div">
+                    <input type="text" class="subject" name="reason" required placeholder="Why You Want To Contact Us ?">
+                </div>
+
+                <div class="input-div">
+                    <textarea rows="10" cols="60" name="message" placeholder="Message" required></textarea>
+                </div>
+
+                <input type="submit" class="submit">
+
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        function cut(){
+            document.querySelector('.success').style = "display:none;"
+        }
+        function refcut(){
+            document.querySelector('.refused').style = "display:none;"
+        }
+    </script>
+
+{% endblock body %}

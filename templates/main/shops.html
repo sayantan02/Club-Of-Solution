@@ -1,0 +1,176 @@
+{% extends 'Base/base.html' %}
+{% load static %}
+{% block main_nav %}{% endblock main_nav %}
+{% block head %}
+<meta charset="UTF-8">
+<link rel="shortcut icon" href="logo.jpeg" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club Of Solution - {% block title %}Search{% endblock title %}</title>
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+    /* form {
+        padding: 15px 20px;
+        border: 1px solid black;
+        border-radius: 10px;
+        background-color: white;
+        width: 50vw;
+        margin: 50px 30px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    form input {
+        width: 90%;
+        outline: none;
+        border: none;
+        font-size: 18px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    form input::placeholder {
+        color: black;
+        font-weight: 600;
+        font-size: 17px;
+    }
+
+    form button {
+        border: none;
+        background-attachment: transparent;
+        font-size: 18px;
+        transition: 0.6s;
+        cursor: pointer;
+    }
+
+    form button:hover {
+        color: var(--main-red);
+    } */
+
+    .search-item {
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.200);
+        display: flex;
+        padding: 10px;
+        width: 30vw;
+        flex-direction: column;
+        margin-left: 30px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        background-color: white;
+    }
+
+    .search-item .image {
+        display: flex;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 29vw;
+    }
+
+    .search-item .image img {
+        transition: 0.6s;
+        width: 27.5vw;
+        border-radius: 10px;
+    }
+
+    .search-item .text {
+        margin: 0px 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        color: black;
+        margin-top: 10px;
+        font-size: 23px;
+    }
+
+    a {
+        transition: 0.6s;
+        font-size: 16px;
+        text-decoration: none;
+        margin: 8px 0px;
+        font-weight: 500;
+        color: rgb(77, 77, 77);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    a i {
+        margin-right: 8px;
+    }
+
+    .output {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    @media(max-width: 700px) {
+        .output {
+            align-items: center;
+        }
+
+        .search-item {
+            margin-left: 0px;
+            flex-direction: column;
+        }
+
+        .search-item .image {
+            display: flex;
+            width: 100%;
+            height: 40vh;
+        }
+
+        .search-item .text {
+            margin: 30px 10px;
+        }
+
+        /* form {
+            width: 90vw;
+            margin: 50px 10px;
+        } */
+
+        .output {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-item {
+            width: 90vw;
+        }
+
+        .search-item .image img {
+            width: 90vw;
+        }
+    }
+</style>
+{% endblock head %}
+{% block body %}
+
+<body>
+
+    <div class="mt-5 output">
+        {% for i in shops %}
+        <div class="search-item">
+            <div class="image">
+                <img src="/media/{{ i.Display_Image }}" alt="{{ i.Display_Image }}" />
+            </div>
+            <div class="text">
+                <a href="/shopview/{{ i.id }}" class="title">{{ i.Name }}</a>
+                <a href="/shopview/{{ i.id }}" class=""><i class="fas fa-globe-asia"></i>{{ i.location }}</a>
+                <a href="/shopview/{{ i.id }}" class=""><i class="fas fa-chevron-right"></i>{{ i.cat.Name }}</a>
+                <a href="/shopview/{{ i.id }}" class=""><i class="fas fa-phone-alt"></i>{{ i.phone }}</a>
+                <a href="/shopview/{{ i.id }}" class=""><i class="fas fa-clock"></i>Opens At {{ i.opening }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+{% endblock body %}

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="logo.jpeg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Of Solution - Add Category</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            width: 100%;
+            padding: 30px 40px;
+        }
+
+        .wrapper .input-data {
+            height: 40px;
+            width: 100%;
+            position: relative;
+        }
+
+        .wrapper .input-data input {
+            height: 100%;
+            width: 100%;
+            border: none;
+            font-size: 17px;
+            border-bottom: 2px solid silver;
+        }
+
+        .input-data input:focus~label,
+        .input-data input:valid~label {
+            transform: translateY(-20px);
+            font-size: 15px;
+            color: #4158d0;
+        }
+
+        .title {
+            color: #4158d0;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 300;
+            font-family: 'Poppins', sans-serif;
+            margin: 50px 0px;
+        }
+
+        .wrapper .input-data label {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            color: grey;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-data .underline {
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .input-data .underline:before {
+            position: absolute;
+            content: "";
+            height: 100%;
+            width: 100%;
+            background: #4158d0;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .input-data input:focus~.underline:before,
+        .input-data input:valid~.underline:before {
+            transform: scaleX(1);
+        }
+
+        .input-data input:focus,
+        .input-data input:valid {
+            outline: none;
+            border-bottom: 0px;
+        }
+
+        form {
+            box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.2);
+            width: 40vw;
+            border-radius: 10px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding-bottom: 30px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4158d0;
+            color: white;
+            border: 2px solid #4158d0;
+            border-radius: 50px;
+            padding: 15px 0px;
+            font-size: 18px;
+            margin: 30px 0px;
+            transition: 0.6s;
+        }
+
+        button:hover {
+            color: #4158d0;
+            background-color: transparent;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 70px 0px;
+            justify-content: center;
+            background: #EAEAEA;
+        }
+
+        a {
+            color: grey;
+            font-family: 'Poppins', sans-serif;
+            padding: 0px 30px;
+            text-decoration: none;
+        }
+
+        @media(max-width: 700px) {
+            form {
+                width: 90vw;
+            }
+        }
+
+        .wrapper-2 {
+            flex-direction: column;
+            display: flex;
+            color: grey;
+            width: 100%;
+            padding: 30px 40px;
+        }
+
+        .wrapper-2 input {
+            margin-top: 10px;
+        }
+
+        .success {
+            background-color: lightgreen;
+            color: green;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        .refused{
+            background-color: rgb(226, 65, 65);
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+
+<body>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1 class="title">Add Category</h1>
+
+
+
+
+
+        {% if success %}
+        <div class="success">
+            Category Successfully Added
+            <i onclick="cut()" style="cursor:pointer;margin-left: 10px;" class="fas fa-times"></i>
+        </div>
+        {% endif %}
+
+        {% if refused %}
+        <div class="refused">
+            This Category was already added
+            <i onclick="refcut()" style="cursor:pointer;margin-left: 10px;" class="fas fa-times"></i>
+        </div>
+        {% endif %}
+
+
+
+
+        <div class="wrapper">
+            <label style="color: grey;" for="">Business Category</label>
+            <select style="border-color: grey; color: grey; border-radius: 2px; padding:5px; margin: 5px 0px;" name="category">
+                {% for i in cat %}
+                <option value="{{i.id}}">{{i}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="wrapper">
+            <div class="input-data">
+                <input type="text" name="Name" required>
+                <div class="underline"></div>
+                <label>Category Name</label>
+            </div>
+        </div>
+
+        <div style=" margin-left: 90px; width: 100%; display: flex; flex-direction: column;">
+            <label style="color: grey; margin-bottom: 15px">Category Image</label>
+            <input type="file" name="image" required>
+        </div>
+
+        <div class="wrapper">
+            <button type="submit" name="add">Add</button>
+        </div>
+
+        <a href="/">Return To Home</a>
+
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script>
+            function cut(){
+                document.querySelector('.success').style = "display:none;"
+            }
+            function refcut(){
+                document.querySelector('.refused').style = "display:none;"
+            }
+        </script>
+
+</body>
+
+</html>

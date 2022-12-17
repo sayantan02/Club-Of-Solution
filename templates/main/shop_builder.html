@@ -1,0 +1,226 @@
+{% extends "Base/base.html" %}
+{% block title %}Build Shop{% endblock title %}
+{% block main_nav %}{% endblock main_nav %}
+{% load static %}
+{% block style %}
+    .main-con {
+        display: flex;
+        align-items: center;
+        padding: 100px;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .sec {
+        margin: 50px 0px;
+        width: 80vw;
+        border-radius: 10px;
+        padding: 50px 0px;
+        box-shadow: 0 0 10px 0 var(--main-red);
+    }
+
+    .sec h1 {
+        font-family: 'Poppins', 'Montserrat', sans-serif;
+        color: var(--main-red);
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .inputs {
+        display: flex;
+        justify-content: center;
+        margin: 30px 0px;
+        flex-wrap: wrap;
+        margin-left: 100px;
+    }
+
+    .inputs-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .input-div {
+        margin: 10px 0px;
+        display: flex;
+        margin: 10px 50px;
+        flex-direction: column;
+    }
+
+    .input-div label {
+        font-weight: bold;
+    }
+
+    .input-div-2 {
+        margin: 10px 0px;
+        display: flex;
+        margin: 10px 50px;
+        flex-direction: column;
+    }
+
+    .input-div-2 label {
+        font-weight: bold;
+    }
+
+    .text {
+        margin-top: 10px;
+        padding: 5px;
+        font-family: 'Poppins', sans-serif;
+    }
+    button{
+        color: white;
+        transition: 0.6s;
+        border: 1px solid #4e73df;
+        background: #4e73df;
+        font-family: 'Poppins', sans-serif;
+        font-size: 20px;
+        padding: 10px 70px;
+    }
+    button:hover{
+        background: transparent;
+        color: #4e73df;
+    }
+    .success {
+        background-color: lightgreen;
+        color: green;
+        padding: 10px 20px;
+        border-radius: 10px;
+    }
+    .refused{
+        background-color: rgb(226, 65, 65);
+        color: rgb(255, 255, 255);
+        padding: 10px 20px;
+        border-radius: 10px;
+    }
+{% endblock style %}
+
+{% block head %}
+
+
+<script type="text/javascript">
+    function EnableDisableTextBox(ddlModels) {
+        var selectedValue = ddlModels.options[ddlModels.selectedIndex].value;
+        var txtOther = document.getElementById("abouttext");
+        txtOther.disabled = selectedValue == "type-own" ? false : true;
+        if (!txtOther.disabled) {
+            txtOther.focus();
+        }
+    }
+</script>
+
+{% endblock head %}
+
+{% block body %}
+
+<div class="main-con">
+    {% if success %}
+    <div class="success">
+        Shop Updated Successfully
+        <i onclick="cut()" style="cursor:pointer;margin-left: 10px;" class="fas fa-times"></i>
+    </div>
+    {% endif %}
+
+    {% if refused %}
+    <div class="refused">
+        You are not permitted to update this Shop
+        <i onclick="refcut()" style="cursor:pointer;margin-left: 10px;" class="fas fa-times"></i>
+    </div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <input type="hidden" name="username" value="{{ request.user.username }}">
+    <div class="slider-sec sec">
+        <h1>Sliders</h1>
+            <div class="inputs">
+                <div class="input-div">
+                    <label>Slide 1</label>
+                    <input type="file" name="slide1" required>
+                </div>
+                <div class="input-div">
+                    <label>Slide 2</label>
+                    <input type="file" name="slide2" required>
+                </div>
+                <div class="input-div">
+                    <label>Slide 3</label>
+                    <input type="file" name="slide3" required>
+                </div>
+                <div class="input-div">
+                    <label>Slide 4</label>
+                    <input type="file" name="slide4" required>
+                </div>
+            </div>
+    </div>
+
+    <div class="about-sec sec">
+        <h1>About Shop</h1>
+        <div class="inputs-2">
+            <div class="input-div">
+                <label>Shop Type</label>
+                <input placeholder="What does your shop represents the best" class="text" type="text" name="shop_type" required>
+            </div>
+            <div class="about input-div-2">
+                <label>About Your Shop</label>
+                <select id="about" class="text" name="about"  onchange = "EnableDisableTextBox(this)">
+                    <option value="About">Same as Previous About</option>
+                    <option value="type-own">Type My own</option>
+                </select>
+                <textarea disabled="true" id="abouttext" name="abouttext" class="text" style="resize: none;" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="employe-sec sec">
+        <div class="head" style="display: flex; align-items: center; justify-content: center;">
+            <h1>Employees</h1>
+            <i style="font-size: 40px; margin-left: 35px; color: #b624e2; cursor:pointer; " class=" mb-2 add fas fa-user-plus"></i>
+            <span style="margin-left: 10px;font-size: x-large;font-weight: bold;" id="emp-count"></span>
+        </div>
+        <div class="emps">
+
+        </div>
+    </div>
+    <button style="float: right;" type="submit">Finish</button>
+    </form>
+</div>
+
+<!-- <script defer src="{% static '/dropzone/dropzone.js' %}" -->
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<script>
+    var click = 1;
+    $(".add").on("click", function () {
+        if (click == 21) {
+            swal("Limit Reached", "The Limitation Of Adding Employees Is Reached, The Limit Is 20", "error");
+        }
+        else {
+            var label = document.createElement("label");
+            label.innerHTML = "Employee " + click;
+            var input = document.createElement("input")
+            input.setAttribute("type", "number");
+            input.setAttribute("placeholder","User Id")
+            input.classList.add("text");
+            var div = document.createElement("div");
+            div.classList.add("input-div");
+            input.classList.add("emp" + 1);
+            input.setAttribute("name", "emp"+click)
+            div.appendChild(label);
+            div.append(input);
+            document.querySelector(".emps").appendChild(div);
+            document.getElementById("emp-count").innerHTML = click;
+            click += 1;
+        }
+    });
+</script>
+
+
+<script>
+    function cut(){
+        document.querySelector('.success').style = "display:none;"
+    }
+    function refcut(){
+        document.querySelector('.refused').style = "display:none;"
+    }
+</script>
+
+{% endblock body %}

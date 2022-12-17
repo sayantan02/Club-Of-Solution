@@ -1,0 +1,389 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="shortcut icon" href="logo.jpeg" type="image/x-icon">
+    <title>Club Of Solution - User Registration</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form {
+            width: 70vw;
+            padding: 20px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.600);
+            height: 140vh;
+        }
+
+        .form,
+        .svg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form .input {
+            padding: 15px;
+            border-radius: 20px;
+            display: flex;
+            background-color: rgb(241, 241, 241);
+            width: 100%;
+            margin: 10px 0px;
+            border: 1px solid rgb(177, 177, 177);
+        }
+
+        .form .input input {
+            padding: 0px 15px;
+            width: 100%;
+            background-color: rgb(241, 241, 241);
+            border: none;
+        }
+
+        .form form {
+            width: 70%;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .svg {
+            height: 100vh;
+            width: 100%;
+        }
+
+        .svg img {
+            height: 80%;
+        }
+
+        input::placeholder {
+            color: rgb(138, 138, 138);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .head {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .head i {
+            color: rgb(94, 161, 255);
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .head p {
+            font-size: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .input i {
+            color: rgb(138, 138, 138);
+        }
+
+        .buttons button {
+            padding: 13px 0px;
+            width: 100%;
+            margin: 20px 0px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+            border: 1px transparent solid;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(90deg, rgba(242, 116, 116, 1) 0%, rgba(241, 171, 171, 1) 100%);
+        }
+
+        .container {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container button {
+            width: 100%;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 0px;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+        }
+
+        .container button i {
+            margin-right: 10px;
+        }
+
+        @media(max-width: 700px) {
+            .section {
+                flex-direction: column;
+            }
+
+            .form {
+                width: 100%;
+                height: max-content;
+                box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.600);
+            }
+
+            .head {
+                margin-top: 20px;
+            }
+
+            .svg {
+                width: 96vw;
+            }
+
+            .svg img {
+                width: 100%;
+            }
+
+            .error {
+                font-size: 13px;
+            }
+        }
+
+        @media(max-width: 450px) {
+            .form form {
+                width: 90%;
+            }
+
+            .container {
+                width: 90%;
+            }
+
+            .svg {
+                height: 70vh;
+            }
+
+            .form .input {
+                border-radius: 10px;
+            }
+        }
+
+        .error {
+            padding: 15px;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(242, 116, 116, 1) 0%, rgba(241, 171, 171, 1) 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .google {
+            background: rgb(255, 71, 71);
+            border: 2px solid rgb(255, 71, 71);
+            transition: 0.5s;
+            color: white;
+        }
+
+        .facebook {
+            background: rgb(42, 42, 255);
+            border: 2px solid rgb(42, 42, 255);
+            transition: 0.5s;
+            color: white
+        }
+
+        .google:hover {
+            background: transparent;
+            color: rgb(255, 71, 71);
+        }
+
+        .facebook:hover {
+            background: transparent;
+            color: rgb(42, 42, 255);
+        }
+
+        .or {
+            font-family: 'Poppins', sans-serif;
+            color: rgb(138, 138, 138);
+            margin: 10px 0px;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .line {
+            height: 1px;
+            background: rgb(138, 138, 138);
+        }
+
+        .success {
+            background-color: lightgreen;
+            color: green;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .refused {
+            background-color: rgb(226, 65, 65);
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+</head>
+
+<body>
+
+
+    <div class="section">
+
+        <div class="form" data-aos="fade-down">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="head">
+                    <i class="fas fa-user-circle"></i>
+                    <p>Sign Up</p>
+                </div>
+
+                {% if success %}
+                <div class="success">
+                    Registered successfully
+                    <i onclick="cut()" style="cursor:pointer;margin-left: 10px;" class="fas fa-times"></i>
+                </div>
+                {% endif %}
+        
+                {% if refused %}
+                <div class="refused">
+                    {{ message }}
+                    <i onclick="refcut()" style="cursor:pointer;margin-left: 10px;" class="fas fa-times"></i>
+                </div>
+                {% endif %}
+
+                <div class="input">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Enter a Username" required name="username">
+                </div>
+
+                <div class="input">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Enter Your Full Name" required name="name">
+                </div>
+                <div class="input">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Enter Your Email Address" required name="email">
+                </div>
+
+                <!-- <div class="input">
+                    <i class="fas fa-globe"></i>
+                    <input type="text" placeholder="Enter The Clity You Live In" required name="city">
+                </div> -->
+
+                <div class="input">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Enter Your Password" required name="pass_1">
+                </div>
+
+                <div class="input" style="margin-bottom: 20px;">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Enter Your Password" required name="pass_2">
+                </div>
+
+                <a style="margin-top: 20px; color: rgb(138, 138, 138); text-decoration: none; font-family: 'Poppins', sans-serif;"
+                    href="/login">Already Have An Account ? Login</a>
+
+                <div class="buttons">
+                    <button name="submit">Register</button>
+                </div>
+
+            </form>
+
+            <div class="or">
+                <div class="line"></div>
+                <div class="p">OR</div>
+                <div class="line"></div>
+            </div>
+
+            <div class="container">
+                <button class="google" onclick="Google()"> <i class="fab fa-google"></i> Sign In With Google</button>
+                <button class="facebook" onclick="Facebook()"> <i class="fab fa-facebook-f"></i> Login With
+                    Facebook</button>
+            </div>
+
+        </div>
+        <div class="svg" data-aos="fade-up">
+            {% if success %}
+            <div class="success">
+                Account Successfully created
+                <i onclick="cut()" style="cursor:pointer;margin-left: 10px;" class="fas fa-times"></i>
+            </div>
+            {% endif %}
+
+            {% if refused %}
+            <div class="refused">
+                User Exists with this Username
+                <i onclick="refcut()" style="cursor:pointer;margin-left: 10px;" class="fas fa-times"></i>
+            </div>
+            {% endif %}
+            <img src="{% static 'signup.svg' %}" alt="">
+        </div>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 2000,
+            });
+        </script>
+
+    </div>
+
+    <script>
+        function setError(msg) {
+            document.querySelector(".error").innerHTML = msg;
+            document.querySelector(".error").style.display = "block";
+        }
+        function Google() {
+            window.location = "/accounts/google/login/";
+        }
+        function Facebook() {
+            window.location = "/accounts/facebook/login/";
+        }
+    </script>
+    <script>
+        function cut() {
+            document.querySelector('.success').style = "display:none;"
+        }
+        function refcut() {
+            document.querySelector('.refused').style = "display:none;"
+        }
+    </script>
+
+</body>
+
+</html>

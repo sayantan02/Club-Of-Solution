@@ -1,0 +1,57 @@
+{% extends 'Base/base_admin.html' %}
+{% block title %} Shops {% endblock title %}
+{% block modules %}active{% endblock modules %}
+{% block body %}
+
+<body style="background-color: #f3f3f3;">
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for i in shop %}
+                <div class="col">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;height: 15rem;"
+                                    src="/media/{{ i.Display_Image }}" alt="...">
+                            </div>
+                            <h5 style="color: black;">{{ i.Name }}
+                                {% if i.Approved %}
+                                <span><i style="color: green;" class="far fa-check-circle"></i></span>
+                                {% elif i.Cancelled %}
+                                <span><i style="color: red;" class="fas fa-times-circle"></i></span>
+                                {% endif %}
+                            </h5>
+                            <span style="float: right;"><i class="mr-2 fas fa-clock"></i> {{ i.Created|timesince }}</span>
+
+                            {% if request.user.is_superuser %}
+                            <h6>User: {{ i.user.username }}</h6>
+                            {% else %}
+                            {% endif %}
+
+                            {% if request.user.is_superuser %}
+                            <p style="float: right;"><i class="mr-2 fas fa-user"></i>{{ i.user.first_name }}</p>
+                            {% else %}
+                            {% endif %}
+
+                            <p><i class="mr-2 fas fa-location-arrow"></i>{{ i.city }}</p>
+
+                            <p><i class="mr-2 fas fa-phone-alt"></i>{{ i.phone }}</p>
+
+                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                <button type="button" class="btn btn-success"><a style="color: white;text-decoration: none;" target="_blank" rel="nofollow" href="/shopview/{{ i.id }}">View</a></button>
+
+                               <button type="button" class="btn btn-primary"> <a style="color: white;text-decoration: none;" target="_blank" rel="nofollow" href="/shopBuilder/{{ i.id }}">Update</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <h2>No Shops here</h2>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock body %}
